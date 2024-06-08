@@ -5,3 +5,4 @@ pub mod requests;
 pub mod entity;
 pub mod endpoints;
 pub mod errors;
+pub mod state;

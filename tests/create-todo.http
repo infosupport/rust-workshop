@@ -1,0 +1,7 @@
+POST http://localhost:8000/v1/todos
+Content-Type: application/json
+
+{
+    "title": "Learn Rust",
+    "description": "Learn Rust by building a RESTful API"
+}

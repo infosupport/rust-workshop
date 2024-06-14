@@ -1,0 +1,8 @@
+PUT http://localhost:8000/v1/todos/2
+Content-Type: application/json
+
+{
+    "title": "Learn Rust Some More",
+    "description": "Learn Rust by building a RESTful API",
+    "completed": true
+}

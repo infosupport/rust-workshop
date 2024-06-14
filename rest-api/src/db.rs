@@ -84,13 +84,15 @@ pub async fn find_todo(pool: &PgPool, id: i32) -> Result<Task> {
 }
 
 /// Inserts a new todo item in the database returning its ID.
+#[instrument]
 pub async fn insert_todo(pool: &PgPool, title: String, description: String) -> Result<i32> {
-    let id: i32 =
-        sqlx::query_scalar("INSERT INTO todos (title, description) VALUES ($1, $2) RETURNING id")
-            .bind(title)
-            .bind(description)
-            .fetch_one(pool)
-            .await?;
+    let id: i32 = sqlx::query_scalar(
+        "INSERT INTO todos (title, description, completed) VALUES ($1, $2, false) RETURNING id",
+    )
+    .bind(title)
+    .bind(description)
+    .fetch_one(pool)
+    .await?;
 
     Ok(id)
 }

@@ -1,8 +1,6 @@
-pub mod configuration;
-pub mod database;
-pub mod responses;
-pub mod requests;
+pub mod config;
+pub mod db;
 pub mod entity;
-pub mod endpoints;
-pub mod errors;
+pub mod error;
 pub mod state;
+pub mod web;

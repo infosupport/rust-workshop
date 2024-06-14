@@ -1,29 +1,53 @@
-use axum::Router;
-use axum::routing::get;
-use rest_api::configuration::ApplicationConfig;
-use rest_api::database::connect_db;
-use rest_api::endpoints::{task_list, task_details, create_task, delete_task, update_task};
-use rest_api::state::AppState;
-
-
-async fn homepage() -> &'static str {
-    "Hello, world!"
-}
+use std::env;
+use todo_api::{config::AppConfig, db, state::AppState, web};
+use tokio::{net::TcpListener, signal};
+use tracing::info;
 
 #[tokio::main]
 async fn main() {
-    let config = ApplicationConfig::load().expect("Failed to load configuration");
-    let connection_pool = connect_db(config.database).await.expect("Failed to connect to database");
+    init_tracing();
+
+    let app_config = AppConfig::load().expect("Failed to load application configuration.");
+
+    let connection_pool = db::connect_db(&app_config.database)
+        .await
+        .expect("Failed to connect to the database.");
+
     let app_state = AppState::new(connection_pool);
-    let bind_address = format!("{}:{}", config.server.host, config.server.port);
+    let router = web::create_router(app_state);
 
-    let router = Router::new()
-        .route("/tasks/:id", get(task_details).patch(update_task).delete(delete_task))
-        .route("/tasks", get(task_list).post(create_task))
-        .with_state(app_state);
+    let listener = TcpListener::bind(app_config.server.to_address())
+        .await
+        .expect("Failed to bind to address.");
 
-    let listener = tokio::net::TcpListener::bind(bind_address)
-        .await.expect("Can't bind to the specified host/port combination");
+    info!(
+        "Listening on {}:{}",
+        app_config.server.host, app_config.server.port
+    );
 
-    axum::serve(listener, router).await.expect("Failed to start the server");
+    // Make sure to use graceful shutdown on Ctrl+C otherwise the server will panic on shutdown.
+    axum::serve(listener, router)
+        .with_graceful_shutdown(async move {
+            signal::ctrl_c()
+                .await
+                .expect("Failed to catch the SIGINT signal");
+        })
+        .await
+        .unwrap();
+}
+
+fn init_tracing() {
+    use tracing_subscriber::{filter::LevelFilter, fmt, prelude::*, EnvFilter};
+
+    let rust_log = env::var(EnvFilter::DEFAULT_ENV)
+        .unwrap_or_else(|_| "sqlx=info,tower_http=debug,info".to_string());
+
+    tracing_subscriber::registry()
+        .with(fmt::layer())
+        .with(
+            EnvFilter::builder()
+                .with_default_directive(LevelFilter::INFO.into())
+                .parse_lossy(&rust_log),
+        )
+        .init();
 }

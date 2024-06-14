@@ -1,3 +1,22 @@
+//! This module contains a set of integration tests to verify that the database interactions work as intended.
+//!
+//! We made the assumption that you have postgres running on your local machine with a database that contains the todos
+//! table as defined in the sql folder in the root of the repository. If you don't have the database set up, you can
+//! use the docker-compose file in the root of the repository to start a postgres instance.
+//!
+//! You can run the tests using the following command:
+//!
+//! ```sh
+//! cargo test
+//! ```
+//!
+//! We recommend excluding these tests from the default test suite because they require a running database instance.
+//! You can do this by running the tests with the following command:
+//!
+//! ```sh
+//! cargo test --lib
+//! ```
+
 use sqlx::PgPool;
 use todo_api::config::DatabaseConfig;
 use todo_api::db::*;

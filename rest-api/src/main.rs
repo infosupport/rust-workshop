@@ -3,6 +3,14 @@ use todo_api::{config::AppConfig, db, state::AppState, web};
 use tokio::{net::TcpListener, signal};
 use tracing::info;
 
+/// The main function of the application.
+///
+/// This function is the entry point of the application. It loads the application configuration, connects to the database,
+/// creates the application state, and starts the server.
+///
+/// Notice that we use the `#[tokio::main]` macro to mark this function as the main function of the application
+/// instead of writing a regular entrypoint. This is because the logic in the API is asynchronous and wouldn't work
+/// if we didn't instrument the main method with the [`tokio::main`] macro.
 #[tokio::main]
 async fn main() {
     init_tracing();
@@ -36,6 +44,11 @@ async fn main() {
         .unwrap();
 }
 
+/// This function initializes tracing so we can see logs from the application.
+///
+/// The logs are currently set up to show in the terminal. In a production scenario
+/// you should consider setting up opentelemetry instead. There's a great package called
+/// `tracing-opentelemetry` that can be used to send logs to a OTEL collector.
 fn init_tracing() {
     use tracing_subscriber::{filter::LevelFilter, fmt, prelude::*, EnvFilter};
 

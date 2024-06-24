@@ -1,6 +1,6 @@
 services:
   database:
-    image: postgres
+    image: postgres:15
     environment:
       POSTGRES_DB: todo_api
       POSTGRES_USER: postgres

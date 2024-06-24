@@ -8,7 +8,7 @@ use crate::{
 use sqlx::postgres::{PgConnectOptions, PgPool, PgPoolOptions};
 use tracing::{event, instrument, Level};
 
-/// Creates a new database connection pool for the postgres database
+/// Creates a new database connection pool for the PostgreSQL database
 /// based on the provided configuration.
 ///
 /// You can change the configuration for the database connection in `config.toml`.

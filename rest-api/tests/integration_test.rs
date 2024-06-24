@@ -1,6 +1,6 @@
 //! This module contains a set of integration tests to verify that the database interactions work as intended.
 //!
-//! We made the assumption that you have postgres running on your local machine with a database that contains the todos
+//! We made the assumption that you have PostgreSQL running on your local machine with a database that contains the todos
 //! table as defined in the sql folder in the root of the repository. If you don't have the database set up, you can
 //! use the docker-compose file in the root of the repository to start a postgres instance.
 //!

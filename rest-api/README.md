@@ -57,7 +57,7 @@ You need to set the following environment variables:
 If you're manually configuring PostgreSQL you'll need to run
 the `../sql/00-create-db.sql` script to get the right structure.
 
-Once you've configured a postgres server with a database, you can run the 
+Once you've configured a PostgreSQL server with a database, you can run the 
 integration tests with the following command:
 
 ```shell

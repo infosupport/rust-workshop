@@ -54,7 +54,7 @@ You need to set the following environment variables:
 | DB_USER       | Database admin user    | postgres      |
 | DB_PASSWORD   | Database user password | postgres      |
 
-If you're manually configuring postgres you'll need to run
+If you're manually configuring PostgreSQL you'll need to run
 the `../sql/00-create-db.sql` script to get the right structure.
 
 Once you've configured a postgres server with a database, you can run the 

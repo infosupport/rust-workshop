@@ -44,7 +44,7 @@ pub enum AppError {
     /// is running.
     DbError(sqlx::Error),
 
-    /// When a TODO item can' be found, this error is returned. This error isn't fixable by the user and is used to
+    /// When a TODO item can't be found, this error is returned. This error isn't fixable by the user and is used to
     /// indicate that the requested TODO item doesn't exist. The error is automatically translated to a 404.
     TodoNotFound,
 }

@@ -1,42 +1,42 @@
-# Rust workshop
+# Rust Workshop - Choose your own adventure
 
-REST API bouwen met Rust
-REST Client bouwen met Rust
+Welcome to the Rust workshop. In this workshop, you'll experience how powerful Rust is and what it
+takes to build two kinds of applications. You can follow this workshop in two ways:
 
-## Uitleg
+- **[Build a REST API with Rust](docs/rest-api-tutorial)**  
+  In this tutorial, you will learn the basics of building an HTTP Server with Rust. In this tutorial, you will learn
+  how to handle HTTP requests, communicate with a database, and how you can build asynchronous programs in Rust.
 
-Introductie, waarom doen we dit?
-UItleg basis van Rust
-Owned/Borrowed memory
-Functions
-Result<T> met pattern matching
-Structs and traits
+- **[Build a command-line tool with Rust](docs/command-line-tutorial)**  
+  In this tutorial, you will learn how to build a command-line utility. We will work with a command-line parser,
+  REST clients, and more.
 
-Uitleg tooling in VSCode en Rust-up
-Cheatsheet op het scherm
+Before you begin, we recommend reading the introduction below. During the workshop, we provide explanations. This is
+an interactive version of the introduction below.
 
-## Opbouw modules
+## Introduction
 
-Doel van de module met basisinstructies voor advanced users
-Stappenplan uitgewerkt voor mensen die het nodig hebben
-Eindresultaat in GIT zodat je kan proberen
+In the introduction, we explain how Rust works and help you get started quickly with a few concepts. This is not a
+complete explanation of the language but certainly useful for taking the first steps!
 
-Links naar rust by example voor meer uitleg.
-Eventueel inline uitleg geven.
+- Why should you get to know Rust?
+- Learning the basics of Rust
+- Memory management in Rust
+- Writing functions in Rust
+- Pattern matching
+- Working with structs and traits
 
-## Module: REST Client bouwen met Rust
+## Module Structure
 
-reqkwest blocking style
-clap voor het parsen van commandline arguments
-wij bieden de API aan vanuit de tweede module
-uitdaging om hem async te maken
+The tutorials are designed so that you can perform them yourself without our help. Each module contains an explanation
+of the goal with a set of basic instructions. So, if you are already a bit further along or want to discover how it
+works yourself, you can get started independently with the instructions.
 
-MaartenM
+In addition to the basic instructions, we have also included a step-by-step plan. You can follow this to get more
+support while learning. We are available during the workshop to help you with questions, so even if you have no
+programming experience, the tutorials should be easy to follow.
 
-## Module: REST API bouwen met Rust
+We have worked out each module with a result. Feel free to peek. In the explanation for each module, there is a
+link to the result.
 
-Database gebruiken in Rust met sqlx
-Async runtime tokio gebruiken
-Axum webserver
-
-WillemM
+Where necessary, we have included links to the manual with more background information.

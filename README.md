@@ -11,8 +11,8 @@ takes to build two kinds of applications. You can follow this workshop in two wa
   In this tutorial, you will learn how to build a command-line utility. We will work with a command-line parser,
   REST clients, and more.
 
-Before you begin, we recommend reading the introduction below. During the workshop, we provide explanations. This is
-an interactive version of the introduction below.
+Before you begin, we recommend reading the introduction below. During the workshop, we'll talk you through the
+introduction to give you a more interactive experience.
 
 ## Introduction
 

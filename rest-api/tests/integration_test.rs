@@ -20,8 +20,11 @@
 use sqlx::PgPool;
 use todo_api::config::DatabaseConfig;
 use todo_api::db::*;
+use dotenv::dotenv;
 
 async fn connect_test_db() -> PgPool {
+    dotenv().ok();
+
     let db_config = DatabaseConfig {
         host: std::env::var("DB_HOST").unwrap().to_string(),
         port: std::env::var("DB_PORT").unwrap().parse().unwrap(),
@@ -37,14 +40,14 @@ async fn connect_test_db() -> PgPool {
 async fn insert_todo_creates_record() {
     let connection_pool = connect_test_db().await;
 
-    let inserted_task = insert_todo(&connection_pool, "test".to_string(), "test".to_string())
+    let inserted_task = insert_todo(&connection_pool, "test".to_string(), "test description".to_string())
         .await
         .unwrap();
 
     let retrieved_task = find_todo(&connection_pool, inserted_task).await.unwrap();
 
     assert_eq!(retrieved_task.title, "test");
-    assert_eq!(retrieved_task.description, "test");
+    assert_eq!(retrieved_task.description, "test description");
     assert_eq!(retrieved_task.completed, false);
 }
 
@@ -52,7 +55,7 @@ async fn insert_todo_creates_record() {
 async fn update_todo_updates_record() {
     let connection_pool = connect_test_db().await;
 
-    let inserted_task = insert_todo(&connection_pool, "test".to_string(), "test".to_string())
+    let inserted_task = insert_todo(&connection_pool, "test".to_string(), "test description".to_string())
         .await
         .unwrap();
 
@@ -60,7 +63,7 @@ async fn update_todo_updates_record() {
         &connection_pool,
         inserted_task,
         "test 2".to_string(),
-        "test 2".to_string(),
+        "test description 2".to_string(),
         true,
     )
     .await
@@ -69,7 +72,7 @@ async fn update_todo_updates_record() {
     let retrieved_task = find_todo(&connection_pool, inserted_task).await.unwrap();
 
     assert_eq!(retrieved_task.title, "test 2");
-    assert_eq!(retrieved_task.description, "test 2");
+    assert_eq!(retrieved_task.description, "test description 2");
     assert_eq!(retrieved_task.completed, true);
 }
 
@@ -77,7 +80,7 @@ async fn update_todo_updates_record() {
 async fn delete_todo_removes_record() {
     let connection_pool = connect_test_db().await;
 
-    let inserted_task = insert_todo(&connection_pool, "test".to_string(), "test".to_string())
+    let inserted_task = insert_todo(&connection_pool, "test".to_string(), "test description".to_string())
         .await
         .unwrap();
 

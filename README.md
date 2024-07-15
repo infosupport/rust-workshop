@@ -33,10 +33,17 @@ of the goal with a set of basic instructions. So, if you are already a bit furth
 works yourself, you can get started independently with the instructions.
 
 In addition to the basic instructions, we have also included a step-by-step plan. You can follow this to get more
-support while learning. We are available during the workshop to help you with questions, so even if you have no
-programming experience, the tutorials should be easy to follow.
+support while learning. We are available during the workshop to help you with questions, so even if you have
+little programming experience, the tutorials should be easy to follow.
 
-We have worked out each module with a result. Feel free to peek. In the explanation for each module, there is a
-link to the result.
+We have extended each module with a completed sample. Feel free to peek at the code if you're stuck. 
+In the explanation for each module, there is a link to the completed sample.
 
 Where necessary, we have included links to the manual with more background information.
+
+## Completed samples
+
+If you're just interested in the final product you can check out the samples in one of these directories:
+
+- [rest-api](./rest-api/)
+- TODO: Link to `rest-client` directory

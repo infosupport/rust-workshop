@@ -45,5 +45,5 @@ Where necessary, we have included links to the manual with more background infor
 
 If you're just interested in the final product you can check out the samples in one of these directories:
 
-- [rest-api](./rest-api/)
+- [rest-api](./rest-api/) - The completed result for the REST API tutorial
 - TODO: Link to `rest-client` directory

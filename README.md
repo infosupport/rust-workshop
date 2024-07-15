@@ -19,12 +19,12 @@ an interactive version of the introduction below.
 In the introduction, we explain how Rust works and help you get started quickly with a few concepts. This is not a
 complete explanation of the language but certainly useful for taking the first steps!
 
-- Why should you get to know Rust?
-- Learning the basics of Rust
-- Memory management in Rust
-- Writing functions in Rust
-- Pattern matching
-- Working with structs and traits
+- [Why should you learn Rust?](docs/introduction/01-why-should-you-learn-rust.md)
+- [Learning the basics of Rust](docs/introduction/02-learning-the-basics-of-rust.md)
+- [Memory management in Rust](docs/introduction/03-memory-management-in-rust.md)
+- [Writing functions in Rust](docs/introduction/04-writing-functions-in-rust.md)
+- [Pattern matching](docs/introduction/05-pattern-matching.md)
+- [Working with structs and traits](docs/introduction/06-working-with-structs-and-traits.md)
 
 ## Module Structure
 

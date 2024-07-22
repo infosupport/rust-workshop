@@ -1,0 +1,20 @@
+[package]
+name = "todo"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+# Hierarchical or layered configurations for Rust applications
+config = "0.14.0"
+
+# Command Line Argument Parser for Rust
+clap = "4.5.9"
+
+# Lightweight logging facade.
+log = "0.4.22"
+
+# Logging facilities that can be easily combined.
+simplelog = "0.12.2"
+
+# A convenient, higher-level HTTP Client.
+reqwest = "0.12.5"

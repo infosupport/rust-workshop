@@ -51,10 +51,6 @@ pub enum AppError {
     /// When a user can't be found, this error is returned. This error isn't fixable by the user and is used to
     /// indicate that the requested user doesn't exist. The error is automatically translated to a 404.
     UserNotFound,
-
-    /// When a client provides an invalid API key, we'll return this error. This error is also returned when we don't
-    /// know the API key in the database. The error is automatically translated to a 401.
-    InvalidApiKey,
 }
 
 /// The details of an error that are shown to the application user.
@@ -76,7 +72,6 @@ impl fmt::Display for AppError {
             }
             AppError::TaskNotFound => write!(f, "The requested task was not found."),
             AppError::UserNotFound => write!(f, "The requested user was not found."),
-            AppError::InvalidApiKey => write!(f, "Invalid API key."),
         }
     }
 }
@@ -123,13 +118,6 @@ impl IntoResponse for AppError {
                 };
 
                 (StatusCode::NOT_FOUND, Json(error_details))
-            }
-            AppError::InvalidApiKey => {
-                let error_details = ErrorDetails {
-                    message: "Invalid API key.".to_string(),
-                };
-
-                (StatusCode::UNAUTHORIZED, Json(error_details))
             }
         };
 

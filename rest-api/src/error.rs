@@ -46,7 +46,15 @@ pub enum AppError {
 
     /// When a TODO item can't be found, this error is returned. This error isn't fixable by the user and is used to
     /// indicate that the requested TODO item doesn't exist. The error is automatically translated to a 404.
-    TodoNotFound,
+    TaskNotFound,
+
+    /// When a user can't be found, this error is returned. This error isn't fixable by the user and is used to
+    /// indicate that the requested user doesn't exist. The error is automatically translated to a 404.
+    UserNotFound,
+
+    /// When a client provides an invalid API key, we'll return this error. This error is also returned when we don't
+    /// know the API key in the database. The error is automatically translated to a 401.
+    InvalidApiKey,
 }
 
 /// The details of an error that are shown to the application user.
@@ -66,7 +74,9 @@ impl fmt::Display for AppError {
             AppError::DbError(_) => {
                 write!(f, "An error occurred while interacting with the database.")
             }
-            AppError::TodoNotFound => write!(f, "The requested todo item was not found."),
+            AppError::TaskNotFound => write!(f, "The requested task was not found."),
+            AppError::UserNotFound => write!(f, "The requested user was not found."),
+            AppError::InvalidApiKey => write!(f, "Invalid API key."),
         }
     }
 }
@@ -84,9 +94,16 @@ impl From<sqlx::Error> for AppError {
 }
 
 impl IntoResponse for AppError {
+    /// Converts an application error into a corresponding HTTP response.
+    ///
+    /// This method is used by Axum to convert an error into a response that can be sent back to the client.
+    /// Depending on the error type, we return a different status code and problem detail object.
+    ///
+    /// If an error is not handled, it ends up here. If we do handle the error in the application than this method
+    /// is not called. So you may see code here that isn't actually used.
     fn into_response(self) -> axum::response::Response {
         let response_data = match self {
-            AppError::TodoNotFound => {
+            AppError::TaskNotFound => {
                 let error_details = ErrorDetails {
                     message: "The requested todo item was not found.".to_string(),
                 };
@@ -99,6 +116,20 @@ impl IntoResponse for AppError {
                 };
 
                 (StatusCode::INTERNAL_SERVER_ERROR, Json(error_details))
+            }
+            AppError::UserNotFound => {
+                let error_details = ErrorDetails {
+                    message: "The requested user was not found.".to_string(),
+                };
+
+                (StatusCode::NOT_FOUND, Json(error_details))
+            }
+            AppError::InvalidApiKey => {
+                let error_details = ErrorDetails {
+                    message: "Invalid API key.".to_string(),
+                };
+
+                (StatusCode::UNAUTHORIZED, Json(error_details))
             }
         };
 

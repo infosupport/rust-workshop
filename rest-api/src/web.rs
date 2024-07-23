@@ -30,7 +30,7 @@ use serde::Deserialize;
 use tower_http::trace::TraceLayer;
 use tracing::instrument;
 
-use crate::{db, error::AppError, state::AppState};
+use crate::{auth::AuthenticatedUser, db, error::AppError, state::AppState};
 
 /// Defines the querystring parameters for retrieving todos.
 #[derive(Deserialize, Debug)]
@@ -57,16 +57,20 @@ struct UpdateTodoForm {
 ///
 /// The URL must include `?page=<number>` to specify which page to include. The page parameter is retrieved using the
 /// [`Query`] extractor. If you want to control the page_size as well, you should add the field for it to the [`Pagination`]
-/// struct and update the call to the [`db::list_todos`] function.
+/// struct and update the call to the [`db::list_tasks`] function.
 ///
 /// This function uses the [`State`] extractor to obtain the shared application state. The application state contains the
 /// database connection pool that is used to retrieve the todo items.
+///
+/// In addition to the shared state, we also use the [`AuthenticatedUser`] extractor to obtain the user
+/// ID of the authenticated user. If this extractor fails, we automatically return a 401 Unauthorized response.
 #[instrument]
 async fn list_todos(
     State(app_state): State<Arc<AppState>>,
     Query(pagination): Query<Pagination>,
+    AuthenticatedUser { user_id }: AuthenticatedUser,
 ) -> Result<impl IntoResponse, AppError> {
-    let result = db::list_todos(&app_state.connection_pool, pagination.page, 10).await?;
+    let result = db::list_tasks(&app_state.connection_pool, user_id, pagination.page, 10).await?;
     Ok(Json(result))
 }
 
@@ -81,8 +85,9 @@ async fn list_todos(
 async fn todo_details(
     State(app_state): State<Arc<AppState>>,
     Path(id): Path<i32>,
+    AuthenticatedUser { user_id }: AuthenticatedUser,
 ) -> Result<impl IntoResponse, AppError> {
-    let result = db::find_todo(&app_state.connection_pool, id)
+    let result = db::find_task(&app_state.connection_pool, user_id, id)
         .await
         .map(|todo| Json(todo))?;
 
@@ -99,10 +104,12 @@ async fn todo_details(
 #[instrument]
 async fn create_todo(
     State(app_state): State<Arc<AppState>>,
+    AuthenticatedUser { user_id }: AuthenticatedUser,
     Json(form): Json<CreateTodoForm>,
 ) -> Result<impl IntoResponse, AppError> {
-    db::insert_todo(
+    db::insert_task(
         &app_state.connection_pool,
+        user_id,
         form.title.clone(),
         form.description.clone(),
     )
@@ -124,11 +131,13 @@ async fn create_todo(
 #[instrument]
 async fn update_todo(
     State(app_state): State<Arc<AppState>>,
+    AuthenticatedUser { user_id }: AuthenticatedUser,
     Path(id): Path<i32>,
     Json(form): Json<UpdateTodoForm>,
 ) -> Result<impl IntoResponse, AppError> {
-    db::update_todo(
+    db::update_task(
         &app_state.connection_pool,
+        user_id,
         id,
         form.title.clone(),
         form.description.clone(),
@@ -149,9 +158,10 @@ async fn update_todo(
 #[instrument]
 async fn delete_todo(
     State(app_state): State<Arc<AppState>>,
+    AuthenticatedUser { user_id }: AuthenticatedUser,
     Path(id): Path<i32>,
 ) -> Result<impl IntoResponse, AppError> {
-    db::delete_todo(&app_state.connection_pool, id).await?;
+    db::delete_task(&app_state.connection_pool, user_id, id).await?;
     Ok((StatusCode::NO_CONTENT, ()))
 }
 

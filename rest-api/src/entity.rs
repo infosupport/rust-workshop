@@ -2,6 +2,8 @@
 //!
 //! We mainly use these for loading/saving data in the database. You can also find these entities in the responses
 //! of the web interface of the application.
+//!
+//! Note that not all fields are serialized by the API. For example, the generated API key for a user is not serialized.
 
 use serde::Serialize;
 use sqlx::FromRow;
@@ -36,6 +38,12 @@ pub struct Task {
 
     /// Whether the task is completed or not.
     pub completed: bool,
+
+    /// The date the task was created.
+    pub date_created: chrono::NaiveDateTime,
+
+    /// The date the task was last modified.
+    pub date_modified: Option<chrono::NaiveDateTime>,
 }
 
 /// Defines the data structure for a task summary.
@@ -49,4 +57,30 @@ pub struct TaskSummary {
 
     /// Whether the task is completed or not.
     pub completed: bool,
+
+    /// The date the task was created.
+    pub date_created: chrono::NaiveDateTime,
+
+    /// The date the task was last modified.
+    pub date_modified: Option<chrono::NaiveDateTime>,
+}
+
+/// Defines the data structure for a user.
+#[derive(FromRow, Serialize)]
+pub struct User {
+    /// Automatically generated ID.
+    pub id: i32,
+
+    /// The email address associated with the user.
+    pub email_address: String,
+
+    /// The API key associated with the user.
+    #[serde(skip_serializing)]
+    pub api_key: String,
+
+    /// The date the user information was created.
+    pub date_created: chrono::NaiveDateTime,
+
+    /// The date the user information was last modified.
+    pub date_modified: Option<chrono::NaiveDateTime>,
 }

@@ -184,12 +184,13 @@ pub async fn get_user_by_id(pool: &PgPool, id: i32) -> Result<User> {
 ///
 /// This method returns a [`Result`] with the [`User`] if the user is found.
 /// Otherwise it returns an error.
+#[instrument(skip(api_key))]
 pub async fn get_user_by_key(pool: &PgPool, api_key: &str) -> Result<User> {
     let user = sqlx::query_as::<_, User>("SELECT * FROM users WHERE api_key = $1")
         .bind(api_key)
         .fetch_one(pool)
         .await
-        .map_err(|_| AppError::InvalidApiKey)?;
+        .map_err(|_| AppError::UserNotFound)?;
 
     Ok(user)
 }

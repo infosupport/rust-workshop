@@ -2,9 +2,9 @@ services:
   database:
     image: postgres:15
     environment:
-      POSTGRES_DB: todo_api
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: ${APP_DATABASE_NAME}
+      POSTGRES_USER: ${APP_DATABASE_USERNAME}
+      POSTGRES_PASSWORD: ${APP_DATABASE_PASSWORD}
     ports:
       - "5432:5432"
     volumes:

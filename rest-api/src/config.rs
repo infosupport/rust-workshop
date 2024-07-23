@@ -1,8 +1,5 @@
 //! This module provides configuration for the application.
 //!
-//! The configuration is loaded from the `config.toml` file and environment variables.
-//! You can consider `config.toml` as the default configuration and environment variables as overrides.
-//!
 //! To configure the application with environment variables you'll need to prefix them with `APP`.
 //! For example `APP_DATABASE_HOST=localhost` will set the database host to `localhost`.
 //!

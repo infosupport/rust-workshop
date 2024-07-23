@@ -5,6 +5,17 @@ It's by no means complete, but it gives you a good idea of what programming with
 
 Please follow the instructions in this README file to understand how to operate this application.
 
+## Configuring the environment
+
+Make sure you have the following variables set in the `.env` file in the application directory:
+
+| Variable name         | Description            | Example value |
+|-----------------------| ---------------------- | ------------- |
+| APP_DATABASE_HOST     | Database host          | localhost     |
+| APP_DATABASE_PORT     | Database server port   | 5432          |
+| APP_DATABASE_USERNAME | Database admin user    | postgres      |
+| APP_DATABASE_PASSWORD | Database user password | postgres      |
+
 ## Running the application
 
 Please use the following commands from the `rest-api` of the repository to run the application:
@@ -34,29 +45,7 @@ For the integration tests, please check the next section.
 
 ### Running integration tests
 
-To run integration tests, run these instructions:
-
-```shell
-cargo test
-```
-
-Before you do, make sure you have a postgres database running.
-You can use `docker compose up -d` to get one running quickly.
-
-You need to set the following environment variables:
-
-| Variable name         | Description            | Example value |
-|-----------------------| ---------------------- | ------------- |
-| APP_DATABASE_HOST     | Database host          | localhost     |
-| APP_DATABASE_PORT     | Database server port   | 5432          |
-| APP_DATABASE_USER     | Database admin user    | postgres      |
-| APP_DATABASE_PASSWORD | Database user password | postgres      |
-
-If you're manually configuring PostgreSQL you'll need to run
-the scripts in the `sql` directory in the order they are numbered.
-
-Once you've configured a PostgreSQL server with a database, you can run the 
-integration tests with the following command:
+Make sure you run `docker compose up -d` to get the test database running.
 
 ```shell
 cargo test

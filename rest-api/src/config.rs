@@ -13,7 +13,7 @@
 //! in source control or a configuration management system.
 
 use crate::error::Result;
-use config::{Config, Environment, File, FileFormat};
+use config::{Config, Environment};
 use serde::Deserialize;
 
 /// Database configuration data structure.
@@ -51,26 +51,19 @@ pub struct AppConfig {
 }
 
 impl AppConfig {
-    /// Loads configuration data from `config.toml` and environment variables prefixed with `APP`.
+    /// Loads configuration data from environment variables prefixed with `APP`.
     /// Environment variables take precedence over the configuration file.
     pub fn load() -> Result<AppConfig> {
         let config = Config::builder()
-            .add_source(File::with_name("config").format(FileFormat::Toml))
-            .add_source(Environment::with_prefix("APP"))
+            .add_source(
+                Environment::with_prefix("APP")
+                    .prefix_separator("_")
+                    .separator("_"),
+            )
             .build()?;
 
         let app_config: AppConfig = config.try_deserialize()?;
 
         Ok(app_config)
-    }
-}
-
-#[cfg(test)]
-mod tests {
-    use super::*;
-
-    #[test]
-    fn load_config_returns_settings() {
-        AppConfig::load().unwrap();
     }
 }

@@ -19,14 +19,15 @@
 
 use std::sync::Arc;
 
+use crate::entity::ApiKey;
 use axum::{
     extract::{Path, Query, State},
     http::StatusCode,
     response::IntoResponse,
-    routing::get,
+    routing::{get, post},
     Json, Router,
 };
-use serde::Deserialize;
+use serde::{Deserialize, Serialize};
 use tower_http::trace::TraceLayer;
 use tracing::instrument;
 
@@ -51,6 +52,19 @@ struct UpdateTodoForm {
     pub title: String,
     pub description: String,
     pub completed: bool,
+}
+
+/// Defines the fields that can be used to register a new user.
+#[derive(Deserialize, Debug)]
+struct RegisterUserForm {
+    pub email_address: String,
+}
+
+/// Defines the response structure for a user that has been created.
+#[derive(Serialize, Debug)]
+struct UserCreatedResponse {
+    /// The generated API key for the user.
+    pub api_key: String,
 }
 
 /// Retrieves a list of todos from the database and renders them as a JSON response.
@@ -165,6 +179,32 @@ async fn delete_todo(
     Ok((StatusCode::NO_CONTENT, ()))
 }
 
+/// Register a new user with associated API key.
+#[instrument]
+async fn register_user(
+    State(app_state): State<Arc<AppState>>,
+    Json(form): Json<RegisterUserForm>,
+) -> Result<impl IntoResponse, AppError> {
+    // Generate a random hex string 24 characters long.
+    let api_key = ApiKey::new();
+
+    db::insert_user(
+        &app_state.connection_pool,
+        form.email_address.clone(),
+        api_key.hash.clone(),
+    )
+    .await?;
+
+    // Returns the API Key for the user. This is a sensitive piece of information and should be handled with care.
+    // We're returning it here for the user to write it down. It will be gone afterwards.
+    Ok((
+        StatusCode::CREATED,
+        Json(UserCreatedResponse {
+            api_key: api_key.key,
+        }),
+    ))
+}
+
 /// Creates the router for the web application.
 ///
 /// The router configures various routes to assiocated handler functions. Each handler function can use the
@@ -178,6 +218,7 @@ pub fn create_router(app_state: Arc<AppState>) -> Router {
             get(todo_details).put(update_todo).delete(delete_todo),
         )
         .route("/v1/todos", get(list_todos).post(create_todo))
+        .route("/v1/users/register", post(register_user))
         .with_state(app_state)
         .layer(TraceLayer::new_for_http())
 }

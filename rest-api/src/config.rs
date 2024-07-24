@@ -51,12 +51,16 @@ impl AppConfig {
     /// Loads configuration data from environment variables prefixed with `APP`.
     /// Environment variables take precedence over the configuration file.
     pub fn load() -> Result<AppConfig> {
+        dotenv::dotenv().ok();
+
         let config = Config::builder()
             .add_source(
                 Environment::with_prefix("APP")
                     .prefix_separator("_")
                     .separator("_"),
             )
+            .set_default("server.host", "0.0.0.0")?
+            .set_default("server.port", 3000)?
             .build()?;
 
         let app_config: AppConfig = config.try_deserialize()?;

@@ -8,6 +8,7 @@
 
 use std::sync::Arc;
 
+use crate::entity::ApiKey;
 use crate::state::AppState;
 use axum::http::StatusCode;
 use axum::response::IntoResponse;
@@ -63,14 +64,17 @@ where
 
         // Try to locate the API key in the headers collection.
         // If it's not there, or we can't parse the key, return an error.
-        let api_key = parts
+        let raw_api_key = parts
             .headers
             .get("X-Api-Key")
             .ok_or(AuthError::InvalidApiKey)?
             .to_str()
             .map_err(|_| AuthError::InvalidApiKey)?;
 
-        let user = db::get_user_by_key(&state.connection_pool, api_key)
+        // Parse the API key into a usable format.
+        let api_key = ApiKey::from_string(&raw_api_key.to_string());
+
+        let user = db::get_user_by_key(&state.connection_pool, &api_key.hash)
             .await
             .map_err(|_| AuthError::InvalidApiKey)?;
 

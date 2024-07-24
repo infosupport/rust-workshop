@@ -1,0 +1,16 @@
+// @name register_request
+
+POST http://localhost:3000/v1/users/register
+Content-Type: application/json
+
+{
+    "email_address": "test@domain.org"
+}
+
+###
+
+@api_key = {{register_request.response.body.api_key}}
+
+GET http://localhost:3000/v1/todos?page=0
+Accept: application/json
+X-Api-Key: {{api_key}}

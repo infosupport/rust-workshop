@@ -7,15 +7,15 @@
         {
             "type": "lldb",
             "request": "launch",
-            "name": "Debug executable 'todo'",
+            "name": "Debug executable 'task'",
             "cargo": {
                 "args": [
                     "build",
-                    "--bin=todo",
-                    "--package=todo"
+                    "--bin=task",
+                    "--package=task"
                 ],
                 "filter": {
-                    "name": "todo",
+                    "name": "task",
                     "kind": "bin"
                 }
             },
@@ -25,16 +25,16 @@
         {
             "type": "lldb",
             "request": "launch",
-            "name": "Debug unit tests in executable 'todo'",
+            "name": "Debug unit tests in executable 'task'",
             "cargo": {
                 "args": [
                     "test",
                     "--no-run",
-                    "--bin=todo",
-                    "--package=todo"
+                    "--bin=task",
+                    "--package=task"
                 ],
                 "filter": {
-                    "name": "todo",
+                    "name": "task",
                     "kind": "bin"
                 }
             },

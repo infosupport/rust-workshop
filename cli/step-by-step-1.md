@@ -18,12 +18,12 @@ cargo 1.79.0 (ffa9cf99a 2024-06-03)
 ## Instructions
 
 1. Create a new directory where you want the project to live.
-Name it **todo-cli**.
+Name it **task-cli**.
 2. Inside this directory, create a file.
 Name it **Cargo.toml** and fill it with the following content.
     ```toml
     [package]
-    name = "todo"
+    name = "task"
     edition = "2021"
 
     [dependencies]
@@ -40,7 +40,7 @@ Issue the following command.
    ```
     Notice how useful the error output is:
     ```console
-    error: failed to parse manifest at `/tmp/todo-cli/Cargo.toml`
+    error: failed to parse manifest at `/tmp/task-cli/Cargo.toml`
 
     Caused by:
     no targets specified in the manifest
@@ -61,9 +61,9 @@ Notice that Cargo downloads a bunch of _crates_, packaged dependencies and compi
 As long as the dependencies don't change, this happens only once.
 If all went well, the end of the output should look like this.
     ```console
-    Compiling todo v0.1.0 (/tmp/todo-cli)
+    Compiling task v0.1.0 (/tmp/task-cli)
         Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.55s
-        Running `target/debug/todo`
+        Running `target/debug/task`
     Hello, World
     ```
 

@@ -1,4 +1,4 @@
-# TODO CLI
+# TASK CLI
 
 This application is a command-line interface to the [REST API for managing tasks](../rest-api).
 Just like its counterpart, it's far from feature complete, but it gives you a good idea of what programming a command-line tool (CLI) in Rust looks like.

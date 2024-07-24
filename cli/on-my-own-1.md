@@ -10,7 +10,7 @@ In this module, you'll learn how to bootstrap a new Rust project up till the poi
 ## Instructions
 
 1. Create a new directory where you want the project to live.
-Name it **todo-cli**.
+Name it **task-cli**.
 2. Inside this directory, create a file.
 Name it [**Cargo.toml**](https://doc.rust-lang.org/cargo/reference/manifest.html).
     * Fill the `[package]` section; at least `name` is required, and we suggest to also specify the `edition`  of Rust that we will be using: **2021**.

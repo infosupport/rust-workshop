@@ -72,17 +72,23 @@ where
         let state = SharedAppState::from_ref(state);
 
         // Try to locate the API key in the headers collection.
-        // If it's not there, or we can't parse the key, return an error.
-        let raw_api_key = parts
+        // If it's not there, we'll shortcut this operation and return an error.
+        let api_key_header = parts
             .headers
             .get("X-Api-Key")
-            .ok_or(AuthError::MissingApiKey)?
+            .ok_or(AuthError::MissingApiKey)?;
+
+        // Convert the API key header into a string.
+        // If the header is not a valid string, we'll return an error.
+        // This is highly unlikely, because we would not be able to receive the request in the first place.
+        let raw_api_key = api_key_header
             .to_str()
             .map_err(|_| AuthError::InvalidApiKey)?;
 
-        // Parse the API key into a usable format.
+        // Parse the API key into a usable format with a hash.
         let api_key = ApiKey::from_string(&raw_api_key.to_string());
 
+        // Use the hash value to look up the user in the database.
         let user = db::get_user_by_key(&state.connection_pool, &api_key.hash)
             .await
             .map_err(|_| AuthError::InvalidApiKey)?;

@@ -28,6 +28,7 @@ pub struct AuthenticatedUser {
 #[derive(Debug)]
 pub enum AuthError {
     InvalidApiKey,
+    MissingApiKey,
 }
 
 #[derive(Serialize)]
@@ -40,10 +41,18 @@ impl IntoResponse for AuthError {
         let response_data = match self {
             AuthError::InvalidApiKey => {
                 let error_details = ErrorDetails {
-                    message: "The requested user was not found.".to_string(),
+                    message: "The provided API key in the X-Api-Key header is invalid.".to_string(),
                 };
 
                 (StatusCode::NOT_FOUND, Json(error_details))
+            }
+            AuthError::MissingApiKey => {
+                let error_details = ErrorDetails {
+                    message: "Please provide an API Key in the X-Api-Key header of your request."
+                        .to_string(),
+                };
+
+                (StatusCode::BAD_REQUEST, Json(error_details))
             }
         };
 
@@ -67,7 +76,7 @@ where
         let raw_api_key = parts
             .headers
             .get("X-Api-Key")
-            .ok_or(AuthError::InvalidApiKey)?
+            .ok_or(AuthError::MissingApiKey)?
             .to_str()
             .map_err(|_| AuthError::InvalidApiKey)?;
 

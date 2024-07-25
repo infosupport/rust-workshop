@@ -6,7 +6,7 @@
 
 use crate::{
     config::DatabaseConfig,
-    entity::{PagedResult, Task, TaskSummary, User},
+    entity::{PagedResult, Task, User},
     error::{AppError, Result},
 };
 use sqlx::postgres::{PgConnectOptions, PgPool, PgPoolOptions};
@@ -47,8 +47,8 @@ pub async fn list_tasks(
     user_id: i32,
     page_index: i32,
     page_size: i32,
-) -> Result<PagedResult<TaskSummary>> {
-    let items = sqlx::query_as::<_, TaskSummary>(
+) -> Result<PagedResult<Task>> {
+    let items = sqlx::query_as::<_, Task>(
         "SELECT id, title, description,completed, date_created, date_modified FROM tasks WHERE user_id =$1 ORDER BY id LIMIT $2 OFFSET $3",
     )
     .bind(user_id)
@@ -145,10 +145,10 @@ pub async fn update_task(
     Ok(())
 }
 
-/// Deletes a todo item from the database.
+/// Deletes a task from the database.
 ///
-/// We use the `rows_affected` method to check if the todo item was deleted successfully.
-/// If no rows were affected, we return an error with the [`AppError::TodoNotFound`] variant.
+/// We use the `rows_affected` method to check if the task was deleted successfully.
+/// If no rows were affected, we return an error with the [`AppError::TaskNotFound`] variant.
 #[instrument]
 pub async fn delete_task(pool: &PgPool, user_id: i32, id: i32) -> Result<()> {
     let rows_affected = sqlx::query("DELETE FROM tasks WHERE user_id = $1 AND id = $2")

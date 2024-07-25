@@ -49,7 +49,8 @@ pub struct AppConfig {
 
 impl AppConfig {
     /// Loads configuration data from environment variables prefixed with `APP`.
-    /// Environment variables take precedence over the configuration file.
+    ///
+    /// You can also set environment variables in a .env file for easier local development.
     pub fn load() -> Result<AppConfig> {
         dotenv::dotenv().ok();
 

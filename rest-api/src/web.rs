@@ -79,7 +79,7 @@ struct UserCreatedResponse {
 /// In addition to the shared state, we also use the [`AuthenticatedUser`] extractor to obtain the user
 /// ID of the authenticated user. If this extractor fails, we automatically return a 401 Unauthorized response.
 #[instrument]
-async fn list_todos(
+async fn list_tasks(
     State(app_state): State<Arc<AppState>>,
     Query(pagination): Query<Pagination>,
     AuthenticatedUser { user_id }: AuthenticatedUser,
@@ -96,7 +96,7 @@ async fn list_todos(
 /// This function uses the [`State`] extractor to obtain the shared application state. The application state contains the
 /// database connection pool that is used to retrieve the todo item.
 #[instrument]
-async fn todo_details(
+async fn task_details(
     State(app_state): State<Arc<AppState>>,
     Path(id): Path<i32>,
     AuthenticatedUser { user_id }: AuthenticatedUser,
@@ -116,7 +116,7 @@ async fn todo_details(
 /// This function uses the [`State`] extractor to obtain the shared application state. The application state contains the
 /// database connection pool that is used to retrieve the todo item.
 #[instrument]
-async fn create_todo(
+async fn create_task(
     State(app_state): State<Arc<AppState>>,
     AuthenticatedUser { user_id }: AuthenticatedUser,
     Json(form): Json<CreateTodoForm>,
@@ -143,7 +143,7 @@ async fn create_todo(
 /// This function uses the [`State`] extractor to obtain the shared application state. The application state contains the
 /// database connection pool that is used to retrieve the todo item.
 #[instrument]
-async fn update_todo(
+async fn update_task(
     State(app_state): State<Arc<AppState>>,
     AuthenticatedUser { user_id }: AuthenticatedUser,
     Path(id): Path<i32>,
@@ -185,7 +185,7 @@ async fn register_user(
     State(app_state): State<Arc<AppState>>,
     Json(form): Json<RegisterUserForm>,
 ) -> Result<impl IntoResponse, AppError> {
-    // Generate a random hex string 24 characters long.
+    // Generate a random hex string 30 characters long.
     let api_key = ApiKey::new();
 
     db::insert_user(
@@ -215,9 +215,9 @@ pub fn create_router(app_state: Arc<AppState>) -> Router {
     Router::new()
         .route(
             "/v1/todos/:id",
-            get(todo_details).put(update_todo).delete(delete_todo),
+            get(task_details).put(update_task).delete(delete_todo),
         )
-        .route("/v1/todos", get(list_todos).post(create_todo))
+        .route("/v1/todos", get(list_tasks).post(create_task))
         .route("/v1/users/register", post(register_user))
         .with_state(app_state)
         .layer(TraceLayer::new_for_http())

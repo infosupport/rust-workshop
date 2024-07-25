@@ -47,25 +47,6 @@ pub struct Task {
     pub date_modified: Option<chrono::NaiveDateTime>,
 }
 
-/// Defines the data structure for a task summary.
-#[derive(FromRow, Serialize)]
-pub struct TaskSummary {
-    /// Automatically generated ID.
-    pub id: i32,
-
-    /// Title to display in the task list.
-    pub title: String,
-
-    /// Whether the task is completed or not.
-    pub completed: bool,
-
-    /// The date the task was created.
-    pub date_created: chrono::NaiveDateTime,
-
-    /// The date the task was last modified.
-    pub date_modified: Option<chrono::NaiveDateTime>,
-}
-
 /// Defines the data structure for a user.
 #[derive(FromRow, Serialize)]
 pub struct User {

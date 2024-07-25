@@ -44,8 +44,8 @@ pub enum AppError {
     /// is running.
     DbError(sqlx::Error),
 
-    /// When a TODO item can't be found, this error is returned. This error isn't fixable by the user and is used to
-    /// indicate that the requested TODO item doesn't exist. The error is automatically translated to a 404.
+    /// When a task can't be found, this error is returned. This error isn't fixable by the user and is used to
+    /// indicate that the requested task doesn't exist. The error is automatically translated to a 404.
     TaskNotFound,
 
     /// When a user can't be found, this error is returned. This error isn't fixable by the user and is used to
@@ -100,7 +100,7 @@ impl IntoResponse for AppError {
         let response_data = match self {
             AppError::TaskNotFound => {
                 let error_details = ErrorDetails {
-                    message: "The requested todo item was not found.".to_string(),
+                    message: "The requested task was not found.".to_string(),
                 };
 
                 (StatusCode::NOT_FOUND, Json(error_details))

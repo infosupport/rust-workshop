@@ -88,7 +88,7 @@ async fn update_todo_updates_record() {
 }
 
 #[tokio::test]
-async fn delete_todo_removes_record() {
+async fn delete_task_removes_record() {
     let connection_pool = connect_test_db().await;
 
     let inserted_task = insert_task(
@@ -110,7 +110,7 @@ async fn delete_todo_removes_record() {
 }
 
 #[tokio::test]
-async fn list_todos_returns_items() {
+async fn list_task_returns_items() {
     let connection_pool = connect_test_db().await;
 
     insert_task(&connection_pool, 1, "test".to_string(), "test".to_string())

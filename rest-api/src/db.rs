@@ -90,7 +90,7 @@ pub async fn find_task(pool: &PgPool, user_id: i32, task_id: i32) -> Result<Task
 
 /// Inserts a new todo item in the database returning its ID.
 ///
-/// We use the `RETURNING id` clause to return the ID of the newly inserted todo item.
+/// We use the `RETURNING id` clause to return the ID of the newly inserted task.
 #[instrument]
 pub async fn insert_task(
     pool: &PgPool,

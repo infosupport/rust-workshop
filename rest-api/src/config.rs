@@ -1,8 +1,5 @@
 //! This module provides configuration for the application.
 //!
-//! The configuration is loaded from the `config.toml` file and environment variables.
-//! You can consider `config.toml` as the default configuration and environment variables as overrides.
-//!
 //! To configure the application with environment variables you'll need to prefix them with `APP`.
 //! For example `APP_DATABASE_HOST=localhost` will set the database host to `localhost`.
 //!
@@ -13,7 +10,7 @@
 //! in source control or a configuration management system.
 
 use crate::error::Result;
-use config::{Config, Environment, File, FileFormat};
+use config::{Config, Environment};
 use serde::Deserialize;
 
 /// Database configuration data structure.
@@ -51,26 +48,24 @@ pub struct AppConfig {
 }
 
 impl AppConfig {
-    /// Loads configuration data from `config.toml` and environment variables prefixed with `APP`.
-    /// Environment variables take precedence over the configuration file.
+    /// Loads configuration data from environment variables prefixed with `APP`.
+    ///
+    /// You can also set environment variables in a .env file for easier local development.
     pub fn load() -> Result<AppConfig> {
+        dotenv::dotenv().ok();
+
         let config = Config::builder()
-            .add_source(File::with_name("config").format(FileFormat::Toml))
-            .add_source(Environment::with_prefix("APP"))
+            .add_source(
+                Environment::with_prefix("APP")
+                    .prefix_separator("_")
+                    .separator("_"),
+            )
+            .set_default("server.host", "0.0.0.0")?
+            .set_default("server.port", 3000)?
             .build()?;
 
         let app_config: AppConfig = config.try_deserialize()?;
 
         Ok(app_config)
-    }
-}
-
-#[cfg(test)]
-mod tests {
-    use super::*;
-
-    #[test]
-    fn load_config_returns_settings() {
-        AppConfig::load().unwrap();
     }
 }

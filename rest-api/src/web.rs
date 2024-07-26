@@ -19,18 +19,19 @@
 
 use std::sync::Arc;
 
+use crate::entity::ApiKey;
 use axum::{
     extract::{Path, Query, State},
     http::StatusCode,
     response::IntoResponse,
-    routing::get,
+    routing::{get, post},
     Json, Router,
 };
-use serde::Deserialize;
+use serde::{Deserialize, Serialize};
 use tower_http::trace::TraceLayer;
 use tracing::instrument;
 
-use crate::{db, error::AppError, state::AppState};
+use crate::{auth::AuthenticatedUser, db, error::AppError, state::AppState};
 
 /// Defines the querystring parameters for retrieving todos.
 #[derive(Deserialize, Debug)]
@@ -53,20 +54,37 @@ struct UpdateTodoForm {
     pub completed: bool,
 }
 
+/// Defines the fields that can be used to register a new user.
+#[derive(Deserialize, Debug)]
+struct RegisterUserForm {
+    pub email_address: String,
+}
+
+/// Defines the response structure for a user that has been created.
+#[derive(Serialize, Debug)]
+struct UserCreatedResponse {
+    /// The generated API key for the user.
+    pub api_key: String,
+}
+
 /// Retrieves a list of todos from the database and renders them as a JSON response.
 ///
 /// The URL must include `?page=<number>` to specify which page to include. The page parameter is retrieved using the
 /// [`Query`] extractor. If you want to control the page_size as well, you should add the field for it to the [`Pagination`]
-/// struct and update the call to the [`db::list_todos`] function.
+/// struct and update the call to the [`db::list_tasks`] function.
 ///
 /// This function uses the [`State`] extractor to obtain the shared application state. The application state contains the
 /// database connection pool that is used to retrieve the todo items.
+///
+/// In addition to the shared state, we also use the [`AuthenticatedUser`] extractor to obtain the user
+/// ID of the authenticated user. If this extractor fails, we automatically return a 401 Unauthorized response.
 #[instrument]
-async fn list_todos(
+async fn list_tasks(
     State(app_state): State<Arc<AppState>>,
     Query(pagination): Query<Pagination>,
+    AuthenticatedUser { user_id }: AuthenticatedUser,
 ) -> Result<impl IntoResponse, AppError> {
-    let result = db::list_todos(&app_state.connection_pool, pagination.page, 10).await?;
+    let result = db::list_tasks(&app_state.connection_pool, user_id, pagination.page, 10).await?;
     Ok(Json(result))
 }
 
@@ -78,11 +96,12 @@ async fn list_todos(
 /// This function uses the [`State`] extractor to obtain the shared application state. The application state contains the
 /// database connection pool that is used to retrieve the todo item.
 #[instrument]
-async fn todo_details(
+async fn task_details(
     State(app_state): State<Arc<AppState>>,
     Path(id): Path<i32>,
+    AuthenticatedUser { user_id }: AuthenticatedUser,
 ) -> Result<impl IntoResponse, AppError> {
-    let result = db::find_todo(&app_state.connection_pool, id)
+    let result = db::find_task(&app_state.connection_pool, user_id, id)
         .await
         .map(|todo| Json(todo))?;
 
@@ -97,12 +116,14 @@ async fn todo_details(
 /// This function uses the [`State`] extractor to obtain the shared application state. The application state contains the
 /// database connection pool that is used to retrieve the todo item.
 #[instrument]
-async fn create_todo(
+async fn create_task(
     State(app_state): State<Arc<AppState>>,
+    AuthenticatedUser { user_id }: AuthenticatedUser,
     Json(form): Json<CreateTodoForm>,
 ) -> Result<impl IntoResponse, AppError> {
-    db::insert_todo(
+    db::insert_task(
         &app_state.connection_pool,
+        user_id,
         form.title.clone(),
         form.description.clone(),
     )
@@ -122,13 +143,15 @@ async fn create_todo(
 /// This function uses the [`State`] extractor to obtain the shared application state. The application state contains the
 /// database connection pool that is used to retrieve the todo item.
 #[instrument]
-async fn update_todo(
+async fn update_task(
     State(app_state): State<Arc<AppState>>,
+    AuthenticatedUser { user_id }: AuthenticatedUser,
     Path(id): Path<i32>,
     Json(form): Json<UpdateTodoForm>,
 ) -> Result<impl IntoResponse, AppError> {
-    db::update_todo(
+    db::update_task(
         &app_state.connection_pool,
+        user_id,
         id,
         form.title.clone(),
         form.description.clone(),
@@ -149,10 +172,37 @@ async fn update_todo(
 #[instrument]
 async fn delete_todo(
     State(app_state): State<Arc<AppState>>,
+    AuthenticatedUser { user_id }: AuthenticatedUser,
     Path(id): Path<i32>,
 ) -> Result<impl IntoResponse, AppError> {
-    db::delete_todo(&app_state.connection_pool, id).await?;
+    db::delete_task(&app_state.connection_pool, user_id, id).await?;
     Ok((StatusCode::NO_CONTENT, ()))
+}
+
+/// Register a new user with associated API key.
+#[instrument]
+async fn register_user(
+    State(app_state): State<Arc<AppState>>,
+    Json(form): Json<RegisterUserForm>,
+) -> Result<impl IntoResponse, AppError> {
+    // Generate a random hex string 30 characters long.
+    let api_key = ApiKey::new();
+
+    db::insert_user(
+        &app_state.connection_pool,
+        form.email_address.clone(),
+        api_key.hash.clone(),
+    )
+    .await?;
+
+    // Returns the API Key for the user. This is a sensitive piece of information and should be handled with care.
+    // We're returning it here for the user to write it down. It will be gone afterwards.
+    Ok((
+        StatusCode::CREATED,
+        Json(UserCreatedResponse {
+            api_key: api_key.key,
+        }),
+    ))
 }
 
 /// Creates the router for the web application.
@@ -165,9 +215,10 @@ pub fn create_router(app_state: Arc<AppState>) -> Router {
     Router::new()
         .route(
             "/v1/todos/:id",
-            get(todo_details).put(update_todo).delete(delete_todo),
+            get(task_details).put(update_task).delete(delete_todo),
         )
-        .route("/v1/todos", get(list_todos).post(create_todo))
+        .route("/v1/todos", get(list_tasks).post(create_task))
+        .route("/v1/users/register", post(register_user))
         .with_state(app_state)
         .layer(TraceLayer::new_for_http())
 }

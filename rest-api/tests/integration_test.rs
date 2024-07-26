@@ -17,10 +17,10 @@
 //! cargo test --lib
 //! ```
 
+use dotenv::dotenv;
 use sqlx::PgPool;
 use todo_api::config::DatabaseConfig;
 use todo_api::db::*;
-use dotenv::dotenv;
 
 async fn connect_test_db() -> PgPool {
     dotenv().ok();
@@ -40,11 +40,16 @@ async fn connect_test_db() -> PgPool {
 async fn insert_todo_creates_record() {
     let connection_pool = connect_test_db().await;
 
-    let inserted_task = insert_todo(&connection_pool, "test".to_string(), "test description".to_string())
-        .await
-        .unwrap();
+    let inserted_task = insert_task(
+        &connection_pool,
+        1,
+        "test".to_string(),
+        "test description".to_string(),
+    )
+    .await
+    .unwrap();
 
-    let retrieved_task = find_todo(&connection_pool, inserted_task).await.unwrap();
+    let retrieved_task = find_task(&connection_pool, 1, inserted_task).await.unwrap();
 
     assert_eq!(retrieved_task.title, "test");
     assert_eq!(retrieved_task.description, "test description");
@@ -55,12 +60,18 @@ async fn insert_todo_creates_record() {
 async fn update_todo_updates_record() {
     let connection_pool = connect_test_db().await;
 
-    let inserted_task = insert_todo(&connection_pool, "test".to_string(), "test description".to_string())
-        .await
-        .unwrap();
-
-    update_todo(
+    let inserted_task = insert_task(
         &connection_pool,
+        1,
+        "test".to_string(),
+        "test description".to_string(),
+    )
+    .await
+    .unwrap();
+
+    update_task(
+        &connection_pool,
+        1,
         inserted_task,
         "test 2".to_string(),
         "test description 2".to_string(),
@@ -69,7 +80,7 @@ async fn update_todo_updates_record() {
     .await
     .unwrap();
 
-    let retrieved_task = find_todo(&connection_pool, inserted_task).await.unwrap();
+    let retrieved_task = find_task(&connection_pool, 1, inserted_task).await.unwrap();
 
     assert_eq!(retrieved_task.title, "test 2");
     assert_eq!(retrieved_task.description, "test description 2");
@@ -77,29 +88,36 @@ async fn update_todo_updates_record() {
 }
 
 #[tokio::test]
-async fn delete_todo_removes_record() {
+async fn delete_task_removes_record() {
     let connection_pool = connect_test_db().await;
 
-    let inserted_task = insert_todo(&connection_pool, "test".to_string(), "test description".to_string())
+    let inserted_task = insert_task(
+        &connection_pool,
+        1,
+        "test".to_string(),
+        "test description".to_string(),
+    )
+    .await
+    .unwrap();
+
+    delete_task(&connection_pool, 1, inserted_task)
         .await
         .unwrap();
 
-    delete_todo(&connection_pool, inserted_task).await.unwrap();
-
-    let result = find_todo(&connection_pool, inserted_task).await;
+    let result = find_task(&connection_pool, 1, inserted_task).await;
 
     assert!(result.is_err());
 }
 
 #[tokio::test]
-async fn list_todos_returns_items() {
+async fn list_task_returns_items() {
     let connection_pool = connect_test_db().await;
 
-    insert_todo(&connection_pool, "test".to_string(), "test".to_string())
+    insert_task(&connection_pool, 1, "test".to_string(), "test".to_string())
         .await
         .unwrap();
 
-    let task_list = list_todos(&connection_pool, 0, 10).await.unwrap();
+    let task_list = list_tasks(&connection_pool, 1, 0, 10).await.unwrap();
 
     assert_ne!(task_list.items.len(), 0);
     assert_ne!(task_list.total_count, 0);

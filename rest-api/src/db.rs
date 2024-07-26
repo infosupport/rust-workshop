@@ -115,8 +115,8 @@ pub async fn insert_task(
 
 /// Updates an existing todo item in the database.
 ///
-/// We use the `rows_affected` method to check if the todo item was updated successfully.
-/// If no rows were affected, we return an error with the [`AppError::TodoNotFound`] variant.
+/// We use the `rows_affected` method to check if the task was updated successfully.
+/// If no rows were affected, we return an error with the [`AppError::TaskNotFound`] variant.
 #[instrument]
 pub async fn update_task(
     pool: &PgPool,

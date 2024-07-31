@@ -99,3 +99,15 @@ In this example, we deconstruct the `Point` struct and extract its `x` and `y` f
 Pattern matching in Rust is a versatile and powerful feature that allows you to write more concise and readable code. By understanding how to use pattern matching with enums, if-statements, and structs, you can take full advantage of this feature in your Rust programs. 
 
 You can find more information about pattern matching in chapter 18 of the [Rust book](https://doc.rust-lang.org/book/ch18-00-patterns.html).
+
+## Summary
+
+In this section, we covered the powerful feature of pattern matching in Rust. Pattern matching allows you to match against the structure of data and destructure it in a concise and readable way. We explored the usage of pattern matching with enums, if-statements, and structs.
+
+With enums, we learned how to define and create them, and then use the `match` syntax to match against the different variants of an enum and perform different actions based on the variant.
+We also saw how pattern matching can be used in if-statements to match against specific patterns, providing a more expressive way to handle different cases.
+
+Finally, we discovered that pattern matching can be used to deconstruct structs and extract their fields, making it easier to work with complex data structures.
+By understanding and utilizing pattern matching in Rust, you can write more concise and readable code, taking full advantage of this versatile and powerful feature.
+
+In the next section, [Working with structs and traits](./05-working-with-structs-and-traits.md), we'll dive int object oriented structures supported in Rust. We'll cover how you can create structs to model complex data structures and how to share behavior across data structures.

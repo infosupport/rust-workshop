@@ -17,7 +17,6 @@ complete explanation of the language, but certainly useful for taking the first 
 - [Why should you learn Rust?](docs/introduction/01-why-should-you-learn-rust.md)
 - [Learning the basics of Rust](docs/introduction/02-learning-the-basics-of-rust.md)
 - [Memory management in Rust](docs/introduction/03-memory-management-in-rust.md)
-- [Writing functions in Rust](docs/introduction/04-writing-functions-in-rust.md)
 - [Pattern matching](docs/introduction/05-pattern-matching.md)
 - [Working with structs and traits](docs/introduction/06-working-with-structs-and-traits.md)
 

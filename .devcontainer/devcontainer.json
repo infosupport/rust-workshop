@@ -1,0 +1,13 @@
+{
+    "name": "Rust Dev Container",
+    "dockerFile": "Dockerfile",
+    "settings": {
+        "terminal.integrated.shell.linux": "/bin/bash"
+    },
+    "extensions": [
+        "rust-lang.rust-analyzer",
+        "ms-vscode.cpptools"
+    ],
+    "postCreateCommand": "rustup default stable",
+    "remoteUser": "vscode"
+}

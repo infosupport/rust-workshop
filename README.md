@@ -40,3 +40,16 @@ We've included links to the manual with more background information.
 
 If you're just interested in the final product, you can check out the sample in this directory:
 You can also check out the code for the REST API here: https://github.com/infosupport/rust-workshop/tree/main/rest-api
+
+## Using the Devcontainer
+
+To make it easier to set up the development environment, we have provided a devcontainer configuration with Rust preconfigured. Follow the steps below to use the devcontainer:
+
+1. Install Docker on your machine if you haven't already.
+2. Open the project in Visual Studio Code.
+3. Install the "Remote - Containers" extension in Visual Studio Code.
+4. Press `F1` and select `Remote-Containers: Open Folder in Container...`.
+5. Select the root folder of the project.
+6. Wait for the container to build and start.
+
+Once the container is running, you will have a fully configured Rust development environment.

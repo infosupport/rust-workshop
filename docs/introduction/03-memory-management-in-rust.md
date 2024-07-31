@@ -1,5 +1,7 @@
 # Memory Management in Rust
 
+In this section, we will explore the memory management model in Rust and how it differs from other programming languages. Rust's ownership system ensures memory safety without the need for a garbage collector, making it a powerful and efficient language for systems programming. We will cover concepts such as ownership, references, and borrowing, which are fundamental to understanding how Rust manages memory. By the end of this section, you will have a solid understanding of Rust's memory management model and be able to write efficient and safe code.
+
 ## Ownership in Rust
 
 Ownership is a central concept in Rust that ensures memory safety without needing a garbage collector. Each value in Rust has a variable that's called its owner. There can only be one owner at a time, and when the owner goes out of scope, the value will be dropped, freeing the memory.
@@ -62,3 +64,5 @@ fn main() {
 ## Summary
 
 Rust's memory management model is based on ownership, which ensures memory safety without needing a garbage collector. This makes Rust programs fast and safe. By understanding ownership, references, and borrowing, you can write efficient and safe Rust code.
+
+In the next section, [Pattern matching](./04-pattern-matching.md), we will discuss pattern matching in Rust. Pattern matching is a powerful feature in Rust that allows you to match against the structure of values and perform different actions based on the patterns. It makes Rust programs more concise, and is used by many Rust developers.

@@ -1,0 +1,101 @@
+# Pattern Matching in Rust
+
+Pattern matching is a powerful feature in Rust that allows you to match against the structure of data and destructure it in a concise and readable way. In this section, we will cover the following topics:
+
+* What enums are, and how to create one
+* How to pattern match against enums with the `match` syntax
+* How to use pattern matching in if-statements
+* How to deconstruct structs with pattern matching
+
+## Enums in Rust
+
+Enums, short for "enumerations," are a way to define a type that can have multiple variants. Each variant can have different data associated with it. Here's an example of how to define and create an enum in Rust:
+
+```rust
+enum Message {
+    Quit,
+    Move { x: i32, y: i32 },
+    Write(String),
+    ChangeColor(i32, i32, i32),
+}
+
+fn main() {
+    let msg1 = Message::Quit;
+    let msg2 = Message::Move { x: 10, y: 20 };
+    let msg3 = Message::Write(String::from("Hello, world!"));
+    let msg4 = Message::ChangeColor(255, 0, 0);
+}
+```
+
+## Pattern Matching with `match`
+
+The `match` syntax allows you to match against the different variants of an enum and perform different actions based on the variant. Here's an example:
+
+```rust
+enum Message {
+    Quit,
+    Move { x: i32, y: i32 },
+    Write(String),
+    ChangeColor(i32, i32, i32),
+}
+
+fn main() {
+    let msg = Message::Move { x: 10, y: 20 };
+
+    match msg {
+        Message::Quit => println!("Quit message"),
+        Message::Move { x, y } => println!("Move to ({}, {})", x, y),
+        Message::Write(text) => println!("Write message: {}", text),
+        Message::ChangeColor(r, g, b) => println!("Change color to ({}, {}, {})", r, g, b),
+    }
+}
+```
+
+## Pattern Matching in if-statements
+
+You can also use pattern matching in if-statements to match against specific patterns. Here's an example:
+
+```rust
+enum Message {
+    Quit,
+    Move { x: i32, y: i32 },
+    Write(String),
+    ChangeColor(i32, i32, i32),
+}
+
+fn main() {
+    let msg = Message::Move { x: 10, y: 20 };
+
+    if let Message::Move { x, y } = msg {
+        println!("Move to ({}, {})", x, y);
+    } else {
+        println!("Not a Move message");
+    }
+}
+```
+
+For more information on pattern matching in if-statements, refer to the [Rust book](https://doc.rust-lang.org/book/ch06-03-if-let.html).
+
+## Deconstructing Structs with Pattern Matching
+
+Pattern matching can also be used to deconstruct structs and extract their fields. Here's an example:
+
+```rust
+struct Point {
+    x: i32,
+    y: i32,
+}
+
+fn main() {
+    let point = Point { x: 10, y: 20 };
+
+    let Point { x, y } = point;
+    println!("Point coordinates: ({}, {})", x, y);
+}
+```
+
+In this example, we deconstruct the `Point` struct and extract its `x` and `y` fields using pattern matching.
+
+Pattern matching in Rust is a versatile and powerful feature that allows you to write more concise and readable code. By understanding how to use pattern matching with enums, if-statements, and structs, you can take full advantage of this feature in your Rust programs. 
+
+You can find more information about pattern matching in chapter 18 of the [Rust book](https://doc.rust-lang.org/book/ch18-00-patterns.html).

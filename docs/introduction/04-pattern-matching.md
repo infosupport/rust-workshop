@@ -102,8 +102,6 @@ fn main() {
 
 In this example, we deconstruct the `Point` struct and extract its `x` and `y` fields using pattern matching.
 
-Pattern matching in Rust is a versatile and powerful feature that allows you to write more concise and readable code. By understanding how to use pattern matching with enums, if-statements, and structs, you can take full advantage of this feature in your Rust programs.
-
 You can find more information about pattern matching in chapter 18 of the [Rust book](https://doc.rust-lang.org/book/ch18-00-patterns.html).
 
 ## Summary

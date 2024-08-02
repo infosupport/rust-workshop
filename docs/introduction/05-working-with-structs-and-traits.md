@@ -43,6 +43,8 @@ struct Person {
 
 impl Greet for Person {
     fn greet(&self) {
+        // &self refers to the current instance of the struct. Think of it as the this pointer in C# or Java.
+        // Because we didn't declare self as mut, we can't change any data on the instance of Person here.
         println!("Hello, my name is {}", self.name);
     }
 }

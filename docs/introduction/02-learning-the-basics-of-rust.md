@@ -87,6 +87,18 @@ fn main() {
 }
 ```
 
+Working with `str` can be confusing at first. When I assign `"Hello, world!"` to `s2`, I'm actually doing two things. First, I allocate a chunk of memory containing a unicode string on the stack.
+Then, I take a slice of the same size, and assign it to the variable `s2`.
+
+The power of `str` becomes more apparent if you want to take parts of a string, for example the following code takes the first four letters of the string stored in `s2`:
+
+```rust
+let s3: &str = s2[0..5];
+```
+
+We took a slice of the string in the sample. The slice type is important in Rust and allows you to quickly and efficiently process binary and text information.
+You can find more information about the slice type in the [Rust book](https://doc.rust-lang.org/book/ch04-03-slices.html).
+
 ## Writing a Function in Rust
 
 Functions in Rust are defined using the `fn` keyword, followed by the function name, parameters, and return type (if any).

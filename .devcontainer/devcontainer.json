@@ -1,0 +1,17 @@
+{
+    "name": "Rust Dev Container",
+    "image": "mcr.microsoft.com/devcontainers/rust:1-1",
+    "customizations": {
+        "vscode": {
+            "settings": {
+                "terminal.integrated.shell.linux": "/bin/bash"
+            },
+            "extensions": [
+                "rust-lang.rust-analyzer",
+                "ms-vscode.cpptools"
+            ]
+        }
+    },
+    "postCreateCommand": "rustup default stable",
+    "remoteUser": "vscode"
+}

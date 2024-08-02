@@ -2,10 +2,10 @@
 
 Pattern matching is a powerful feature in Rust that allows you to match against the structure of data and destructure it in a concise and readable way. In this section, we will cover the following topics:
 
-* What enums are, and how to create one
-* How to pattern match against enums with the `match` syntax
-* How to use pattern matching in if-statements
-* How to deconstruct structs with pattern matching
+- What enums are, and how to create one
+- How to pattern match against enums with the `match` syntax
+- How to use pattern matching in if-statements
+- How to deconstruct structs with pattern matching
 
 ## Enums in Rust
 
@@ -26,6 +26,12 @@ fn main() {
     let msg4 = Message::ChangeColor(255, 0, 0);
 }
 ```
+
+There are a few different types of enum variants that you can use:
+
+1. If you don't need to associate any data, you can use just the name of the variation.
+2. If you want to associate structured data, you can use an anonymous struct.
+3. If you don't care about using fields, you can associate on or more values as shown in `Write(String)`, and `ChangeColor(i32, i32, i32)`.
 
 ## Pattern Matching with `match`
 
@@ -96,7 +102,7 @@ fn main() {
 
 In this example, we deconstruct the `Point` struct and extract its `x` and `y` fields using pattern matching.
 
-Pattern matching in Rust is a versatile and powerful feature that allows you to write more concise and readable code. By understanding how to use pattern matching with enums, if-statements, and structs, you can take full advantage of this feature in your Rust programs. 
+Pattern matching in Rust is a versatile and powerful feature that allows you to write more concise and readable code. By understanding how to use pattern matching with enums, if-statements, and structs, you can take full advantage of this feature in your Rust programs.
 
 You can find more information about pattern matching in chapter 18 of the [Rust book](https://doc.rust-lang.org/book/ch18-00-patterns.html).
 

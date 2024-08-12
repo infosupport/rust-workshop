@@ -25,3 +25,4 @@ Write a [function](https://doc.rust-lang.org/book/ch03-03-how-functions-work.htm
 4. Run your program using `cargo run`.
 
 Congratulations, you have bootstrapped your first Rust project!
+[On to the next step: using a logging library](./on-my-own-2.md)

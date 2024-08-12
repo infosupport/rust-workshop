@@ -68,3 +68,4 @@ If all went well, the end of the output should look like this.
     ```
 
 Congratulations, you have bootstrapped your first Rust project!
+[On to the next step: using a logging library](./step-by-step-2.md)

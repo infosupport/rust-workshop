@@ -28,7 +28,7 @@ Name it **Cargo.toml** and fill it with the following content.
 
     [dependencies]
     config = "0.14.0"
-    clap = "4.5.9"
+    clap = { version = "4.5.15", features = ["derive"] }
     log = "0.4.22"
     simplelog = "0.12.2"
     reqwest = "0.12.5"

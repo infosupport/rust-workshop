@@ -16,7 +16,7 @@ Name it [**Cargo.toml**](https://doc.rust-lang.org/cargo/reference/manifest.html
     * Fill the `[package]` section; at least `name` is required, and we suggest to also specify the `edition`  of Rust that we will be using: **2021**.
     * In the `[dependencies]` section, add dependencies to the following crates with their respective version numbers:
         * *config*: 0.14.0
-        * *clap*: 4.5.9
+        * *clap*: 4.5.15, with the `derive` feature enabled
         * *log*: 0.4.22
         * *simplelog*: 0.12.2
         * *reqwest*: 0.12.5

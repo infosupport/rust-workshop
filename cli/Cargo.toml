@@ -8,7 +8,7 @@ edition = "2021"
 config = "0.14.0"
 
 # Command Line Argument Parser for Rust
-clap = "4.5.9"
+clap = { version = "4.5.15", features = ["derive"] }
 
 # Lightweight logging facade.
 log = "0.4.22"

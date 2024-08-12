@@ -14,3 +14,6 @@ You've completed [Module 1](./on-my-own-1.md).
     * If the terminal supports it, it would be nice to have coloured output.
 2. Inside the main function, use _simplelog_ instead of the `println` invocation to print the "Hello, world" at info level.
 3. Verify our application still works by running `cargo run` again.
+
+Congratulations, you have configured logging in your first Rust project!
+On to the next step: [parsing command-line arguments](./on-my-own-3.md).

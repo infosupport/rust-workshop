@@ -1,8 +1,15 @@
-
+use clap::Parser;
 use simplelog::ColorChoice;
 use simplelog::LevelFilter;
 use simplelog::TermLogger;
 use simplelog::TerminalMode;
+
+#[derive(Parser)]
+#[command(version, about, long_about = None)]
+struct Cli {
+    #[arg(short = 'v', long = "verbose", help = "Enables verbose mode")]
+    verbose: bool
+}
 
 /// This function initializes the logging facade and implementation for the application.
 /// 
@@ -21,7 +28,12 @@ fn prepare_logging(verbose: bool) {
 /// 
 /// This is where the application starts.
 pub fn main() {
-    prepare_logging(false);
+    let cli = Cli::parse();
 
+    let verbose = cli.verbose;
+
+    prepare_logging(verbose);
+
+    log::debug!("Test");
     log::info!("Hello, world!");
 }

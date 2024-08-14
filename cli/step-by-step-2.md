@@ -37,4 +37,4 @@ You've completed [Module 1](./step-by-step-1.md).
 3. Verify our application still works by running `cargo run` again.
 
 Congratulations, you have configured logging in your first Rust project!
-On to the next step: [parsing command-line arguments](./step-by-step-3.md)
+On to the next step: [parsing command-line arguments](./step-by-step-3.md).

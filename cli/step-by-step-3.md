@@ -48,3 +48,6 @@ You've completed [Module 2](./step-by-step-2.md).
    log::debug!("Test");
    ```
    Now rebuild and play around with our newly created _verbosity_.
+
+Congratulations, you have made your first steps in parsing command-line arguments!
+On to the next step: [reading a configuration file](./step-by-step-4.md).

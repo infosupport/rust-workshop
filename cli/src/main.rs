@@ -1,4 +1,7 @@
 use clap::Parser;
+use config::Config;
+use config::File;
+use config::FileFormat;
 use simplelog::ColorChoice;
 use simplelog::LevelFilter;
 use simplelog::TermLogger;
@@ -37,6 +40,21 @@ pub fn main() {
 
     prepare_logging(verbose);
 
+    let source = File::with_name("task.ini").format(FileFormat::Ini);
+    let config = Config::builder()
+        .add_source(source)
+        .build()
+        .unwrap();
+
+    let api_key = match config.get_string("apikey") {
+        Ok(api_key) => api_key,
+        Err(error) => {
+            log::error!("Can't find API key: {}", error.to_string());
+            std::process::exit(1);
+        }
+    };
+
+    log::info!("Found API key: {}", api_key);
     log::debug!("Test");
     log::info!("Hello, world!");
 }

@@ -20,3 +20,6 @@ You've completed [Module 2](./on-my-own-2.md).
    If `verbose` is specified, the _simplelog_ crate should print "debug" and higher logging levels.
    If it isn't, "debug" statements should not be printed, only "info" and up.
    Now rebuild and play around with our newly created _verbosity_.
+
+Congratulations, you have made your first steps in parsing command-line arguments!
+On to the next step: [?](./on-my-own-4.md).

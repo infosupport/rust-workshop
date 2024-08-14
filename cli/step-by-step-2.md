@@ -19,11 +19,14 @@ You've completed [Module 1](./step-by-step-1.md).
    Now, just above the `main` function, add a new function that configures the _simplelog_ crate:
    ```rs
    fn prepare_logging(verbose: bool) {
-       let level = if verbose { LevelFilter::Debug } else { LevelFilter::Info };
+       let level = if verbose {
+           LevelFilter::Debug
+       } else {
+           LevelFilter::Info
+       };
        let config = simplelog::Config::default();
 
-       TermLogger::init(level, config, TerminalMode::Mixed, ColorChoice::Auto)
-           .unwrap();
+       TermLogger::init(level, config, TerminalMode::Mixed, ColorChoice::Auto).unwrap();
    }
    ```
    This code determines the logging level that our application will actually show, allowing us to suppress debug logging later.

@@ -30,7 +30,7 @@ You've completed [Module 2](./step-by-step-2.md).
    Inside the `Cli` struct, add these two lines:
    ```rs
     #[arg(short = 'v', long = "verbose", help = "Enables verbose mode")]
-    verbose: bool
+    verbose: bool,
    ```
    This declares a flag that can be enabled or disabled, with a "short" toggle (`-v`) as well as a longer one (`--verbose`).
    Now, inside the `main` function, just above the call to `prepare_logging`, add the following snippet:

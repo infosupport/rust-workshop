@@ -1,6 +1,6 @@
 # Module 2: Configure logging
 
-In this module, you'll learn how to add a simple logging library so we can later write clean logging code.
+In this module, you'll learn how to add [a simple logging library](https://docs.rs/simplelog/latest/simplelog/) so we can later write clean logging code.
 
 ## Prerequisites
 

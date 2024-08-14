@@ -1,6 +1,6 @@
 # Module 3: Parsing Command-Line Arguments
 
-In this module, you'll learn how to process user input on the command line.
+In this module, you'll learn how to process user input on the command line using the [clap](https://docs.rs/clap/latest/clap/) crate.
 We will not cover writing an _interactive_ command-line application, but provide the basics, where the user needs to provide complete and correct inputs with each invocation.
 
 ## Prerequisites

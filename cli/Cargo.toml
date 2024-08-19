@@ -16,6 +16,9 @@ clap = { version = "4.5.15", features = ["derive"] }
 # Lightweight logging facade.
 log = "0.4.22"
 
+# Framework for serializing and deserializing Rust data structures
+serde = { version = "1.0.208", features = ["derive"] }
+
 # Logging facilities that can be easily combined.
 simplelog = "0.12.2"
 

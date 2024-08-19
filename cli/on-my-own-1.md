@@ -19,6 +19,7 @@ Name it [**Cargo.toml**](https://doc.rust-lang.org/cargo/reference/manifest.html
         * *chrono*: 0.4.38, with the `serde` feature enabled
         * *clap*: 4.5.15, with the `derive` feature enabled
         * *log*: 0.4.22
+        * *serde*: 1.0.208, with the `derive` feature enabled
         * *simplelog*: 0.12.2
         * *reqwest*: 0.12.6, with the `blocking` and `json` features enabled
 3. Create a new file, **src/main.rs**.

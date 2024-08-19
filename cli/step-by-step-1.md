@@ -31,6 +31,7 @@ Name it **Cargo.toml** and fill it with the following content.
     chrono = { version = "0.4.38", features = ["serde"] }
     clap = { version = "4.5.15", features = ["derive"] }
     log = "0.4.22"
+    serde = { version = "1.0.208", features = ["derive"] }
     simplelog = "0.12.2"
     reqwest = { version = "0.12.6", features = ["blocking", "json"] }
     ```

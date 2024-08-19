@@ -7,6 +7,9 @@ edition = "2021"
 # Hierarchical or layered configurations for Rust applications
 config = "0.14.0"
 
+# Provides functionality needed to do correct operations on dates and times
+chrono = { version = "0.4.38", features = ["serde"] }
+
 # Command Line Argument Parser for Rust
 clap = { version = "4.5.15", features = ["derive"] }
 

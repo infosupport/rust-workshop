@@ -31,7 +31,7 @@ Name it **Cargo.toml** and fill it with the following content.
     clap = { version = "4.5.15", features = ["derive"] }
     log = "0.4.22"
     simplelog = "0.12.2"
-    reqwest = "0.12.5"
+    reqwest = { version = "0.12.6", features = ["blocking", "json"] }
     ```
 3. Using a terminal (Bash, PowerShell or whatever you're comfortable with) navigate into the directory.
 Issue the following command.

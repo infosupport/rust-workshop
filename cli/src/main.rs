@@ -1,3 +1,6 @@
+use std::cmp::min;
+
+use api::TaskApiClient;
 use clap::Parser;
 use config::Config;
 use config::File;
@@ -6,6 +9,8 @@ use simplelog::ColorChoice;
 use simplelog::LevelFilter;
 use simplelog::TermLogger;
 use simplelog::TerminalMode;
+
+mod api;
 
 #[derive(Parser)]
 #[command(version, about, long_about = None)]
@@ -41,10 +46,7 @@ pub fn main() {
     prepare_logging(verbose);
 
     let source = File::with_name("task.ini").format(FileFormat::Ini);
-    let config = Config::builder()
-        .add_source(source)
-        .build()
-        .unwrap();
+    let config = Config::builder().add_source(source).build().unwrap();
 
     let api_key = match config.get_string("apikey") {
         Ok(api_key) => api_key,
@@ -54,7 +56,22 @@ pub fn main() {
         }
     };
 
-    log::info!("Found API key: {}", api_key);
-    log::debug!("Test");
-    log::info!("Hello, world!");
+    let client = api::ApiClient::new(api_key);
+    match client.list(0) {
+        Ok(result) => {
+            log::info!(
+                "Found {} tasks, displaying first {}",
+                result.total_count,
+                min(i64::from(result.page_size), result.total_count)
+            );
+            for task in result.items {
+                let created = task.date_created.format("%B %d, %Y at %H:%M");
+                log::info!("{:>4}: {} [created {}]", task.id, task.title, created)
+            }
+        }
+        Err(e) => {
+            log::error!("Can't invoke API: {}", e);
+            std::process::exit(1);
+        }
+    }
 }

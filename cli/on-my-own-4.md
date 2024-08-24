@@ -29,3 +29,4 @@ You've completed [Module 3](./on-my-own-3.md).
    Of course, printing your API key is not something you would do in a real-world scenario.
 
 Congratulations, you have made your first steps in processing application configuration!
+On to the next step: [interacting with a remote REST API](./on-my-own-5.md).

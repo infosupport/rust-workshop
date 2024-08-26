@@ -33,6 +33,8 @@ There are a few different types of enum variants that you can use:
 2. If you want to associate structured data, you can use an anonymous struct.
 3. If you don't care about using fields, you can associate on or more values as shown in `Write(String)`, and `ChangeColor(i32, i32, i32)`.
 
+Please check out [the documentation](https://doc.rust-lang.org/book/ch06-01-defining-an-enum.html#defining-an-enum) to learn more about defining enums in Rust.
+
 ## Pattern Matching with `match`
 
 The `match` syntax allows you to match against the different variants of an enum and perform different actions based on the variant. Here's an example:

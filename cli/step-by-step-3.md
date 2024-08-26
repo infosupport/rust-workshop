@@ -21,11 +21,11 @@ You've completed [Module 2](./step-by-step-2.md).
    Because we used `features = ["derive"]` in **Cargo.toml**, we can leverage the _declarative_ mode of the _clap_ crate.
    This means we write a _struct_ (a named set of values that occupy a block of memory) and rely on clap to provide us with a populated struct at runtime.
    The clap crate can do this because we added a _derive_ attribute on our _struct_, and we pass it the `Parser` macro that will generate the complete argument parser at build-time.
-   We also add a few common commands to the application by applying the `command` macro; this macro will add a `version` and a `help` option.
+   We also add a few common commands to the application by applying the `command` macro; this macro will add a `version` and a `help` option.  
 2. Let's verify our work so far.
    Open a terminal and navigate into the project directory, or re-use the terminal window you might have from module 1.
-   Run `cargo run -- --help`; the `--` seperates arguments for `cargo run` from the arguments that we want to pass to our program; otherwise, `--help` would've been passed to `cargo run`.
-   The output should provide a short manual for our future users!
+   Run `cargo run -- --help`; the `--` separates arguments for `cargo run` from the arguments that we want to pass to our program; otherwise, `--help` would've been passed to `cargo run`.
+   The output should provide a short manual for our future users!  
 3. Let's add a global flag to our application.
    Inside the `Cli` struct, add these two lines:
    ```rs

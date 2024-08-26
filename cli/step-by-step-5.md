@@ -51,6 +51,7 @@ You've completed [Module 4](./step-by-step-4.md).
       Copy the `PagedResult` _struct_ and the `Task` struct over from [the servers **entity.rs**](https://github.com/infosupport/rust-workshop/blob/main/rest-api/src/entity.rs) (lines 14 till 48) over to this new file.
       Drop the `FromRow` macro from the `derive` attribute.
       It is necessary for reading the struct from the database, so we don't need it for this client.
+      Inside **api.rs**, add `use model::{PagedResult, Task};` and `mod model;` right to the top of the file.
    2. Next, we must write the signature for the Rust method that will correspond with the first API call, `GET /v1/todos`.
       To do that, we add a Rust _trait_ to the **api.rs** file:
       ```rs
@@ -118,6 +119,7 @@ You've completed [Module 4](./step-by-step-4.md).
    Since the `match` is exhaustive (it has to be, the Rust compiler will print an error if it isn't), we can use the same trick for the `match` itself - no semicolon or return and it automatically becomes the return value for this function.
 
 5. Finally, change the **main.rs** file to use this new REST API client and print something useful from the information that we retrieve with it.
+   First, inside **main.rs**, add `mod api;` to the top of the file.
    Replace the last lines of the `main` function with this:
    ```rs
    let client = api::ApiClient::new(api_key);

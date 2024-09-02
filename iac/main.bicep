@@ -1,7 +1,8 @@
 param environmentName string
 param location string
-param serverName string
+param databaseServerName string
 param adminUsername string
+@secure()
 param adminPassword string
 param registryName string
 param workspaceName string
@@ -19,15 +20,14 @@ module containerApp 'container-app.bicep' = {
   params: {
     environmentName: environmentName
     location: location
-    customerId: logAnalytics.outputs.customerId
-    sharedKey: logAnalytics.outputs.sharedKey
+    logAnalyticsWorkspaceName: workspaceName
   }
 }
 
 module postgres 'postgres.bicep' = {
   name: 'postgres'
   params: {
-    serverName: serverName
+    serverName: databaseServerName
     location: location
     adminUsername: adminUsername
     adminPassword: adminPassword
@@ -41,8 +41,3 @@ module containerRegistry 'container-registry.bicep' = {
     location: location
   }
 }
-
-output containerAppEnvironmentId string = containerApp.outputs.containerAppEnvironmentId
-output postgresServerId string = postgres.outputs.postgresServerId
-output containerRegistryId string = containerRegistry.outputs.containerRegistryId
-output logAnalyticsWorkspaceId string = logAnalytics.outputs.logAnalyticsWorkspaceId

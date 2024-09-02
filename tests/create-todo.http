@@ -1,4 +1,5 @@
-POST http://localhost:8000/v1/todos
+POST https://todo-api.wonderfulbeach-47cacaf7.northeurope.azurecontainerapps.io/v1/todos
+X-API_KEY: <Insert your API key>
 Content-Type: application/json
 
 {

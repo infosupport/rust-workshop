@@ -1,6 +1,6 @@
-PUT http://localhost:8000/v1/todos/2
+PUT https://todo-api.wonderfulbeach-47cacaf7.northeurope.azurecontainerapps.io/v1/todos/2
 Content-Type: application/json
-
+X-API-KEY: <Insert your API key>
 {
     "title": "Learn Rust Some More",
     "description": "Learn Rust by building a RESTful API",

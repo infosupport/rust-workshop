@@ -8,11 +8,11 @@
     "location": {
       "value": "NorthEurope"
     },
-    "serverName": {
+    "databaseServerName": {
       "value": "postgres-rustworkshop-neu"
     },
     "registryName": {
-      "value": "acrrustworkshopneu"
+      "value": "acrrustworkshopneu01"
     },
     "workspaceName": {
       "value": "law-rustworkshop-neu"

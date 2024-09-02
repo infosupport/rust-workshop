@@ -1,0 +1,18 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "containerAppsEnvironmentName": {
+            "value": "cae-rustworkshop-neu"
+        },
+        "location": {
+            "value": "NorthEurope"
+        },
+        "databaseServerName": {
+            "value": "postgres-rustworkshop-neu"
+        },
+        "containerRegistryName": {
+            "value": "acrrustworkshopneu01"
+        }
+    }
+}

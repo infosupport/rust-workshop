@@ -1,1 +1,2 @@
-GET http://localhost:8000/v1/todos?page=0
+GET https://todo-api.wonderfulbeach-47cacaf7.northeurope.azurecontainerapps.io/v1/todos?page=0
+X-API-KEY: <Insert your API key>

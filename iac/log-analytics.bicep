@@ -12,5 +12,4 @@ resource logAnalyticsWorkspace 'Microsoft.OperationalInsights/workspaces@2021-06
   }
 }
 
-output customerId string = logAnalyticsWorkspace.properties.customerId
-output sharedKey string = listKeys.outputs.sharedKey
+output workspaceId string = logAnalyticsWorkspace.id

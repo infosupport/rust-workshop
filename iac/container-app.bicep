@@ -1,7 +1,10 @@
 param environmentName string
 param location string
-param customerId string
-param sharedKey string
+param logAnalyticsWorkspaceName string
+
+resource logAnalyticsWorkspace 'Microsoft.OperationalInsights/workspaces@2023-09-01' existing = {
+  name: logAnalyticsWorkspaceName
+}
 
 resource containerAppEnvironment 'Microsoft.App/managedEnvironments@2023-11-02-preview' = {
   name: environmentName
@@ -10,8 +13,8 @@ resource containerAppEnvironment 'Microsoft.App/managedEnvironments@2023-11-02-p
     appLogsConfiguration: {
       destination: 'log-analytics'
       logAnalyticsConfiguration: {
-        customerId: customerId
-        sharedKey: sharedKey
+        customerId: logAnalyticsWorkspace.properties.customerId
+        sharedKey: logAnalyticsWorkspace.listKeys().primarySharedKey
       }
     }
   }

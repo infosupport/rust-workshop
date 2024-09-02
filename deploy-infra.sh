@@ -10,6 +10,17 @@ while [[ "$#" -gt 0 ]]; do
     shift
 done
 
+# Check that adminUsername and adminPassword are set
+if [ -z "$adminUsername" ]; then
+    echo "adminUsername is not set"
+    exit 1
+fi
+
+if [ -z "$adminPassword" ]; then
+    echo "adminPassword is not set"
+    exit 1
+fi
+
 # Create a new resource group if it doesn't already exist
 az group create --name rg-rustworkshop-neu --location NorthEurope
 

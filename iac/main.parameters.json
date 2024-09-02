@@ -8,7 +8,7 @@
     "location": {
       "value": "NorthEurope"
     },
-    "serverName": {
+    "databaseServerName": {
       "value": "postgres-rustworkshop-neu"
     },
     "registryName": {

@@ -1,6 +1,6 @@
 param environmentName string
 param location string
-param serverName string
+param databaseServerName string
 param adminUsername string
 @secure()
 param adminPassword string
@@ -27,7 +27,7 @@ module containerApp 'container-app.bicep' = {
 module postgres 'postgres.bicep' = {
   name: 'postgres'
   params: {
-    serverName: serverName
+    serverName: databaseServerName
     location: location
     adminUsername: adminUsername
     adminPassword: adminPassword

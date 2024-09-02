@@ -29,6 +29,7 @@ resource todoApiApplication 'Microsoft.App/containerApps@2024-03-01' = {
       ingress: {
         allowInsecure: false
         targetPort: 3000
+        external: true
       }
       registries: [
         {
@@ -62,11 +63,15 @@ resource todoApiApplication 'Microsoft.App/containerApps@2024-03-01' = {
             { name: 'APP_DATABASE_HOST', value: postgresServer.properties.fullyQualifiedDomainName }
             { name: 'APP_DATABASE_PORT', value: '5432' }
             { name: 'APP_DATABASE_NAME', value: 'todo_api' }
-            { name: 'APP_DATABASE_USER', secretRef: 'database-username' }
+            { name: 'APP_DATABASE_USERNAME', secretRef: 'database-username' }
             { name: 'APP_DATABASE_PASSWORD', secretRef: 'database-password' }
           ]
         }
       ]
+      scale: {
+        minReplicas: 1
+        maxReplicas: 1
+      }
     }
   }
 }

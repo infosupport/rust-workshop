@@ -21,4 +21,12 @@ resource postgresServer 'Microsoft.DBforPostgreSQL/flexibleServers@2023-12-01-pr
       tier: 'P4'
     }
   }
+
+  resource todoApiDatabase 'databases' = {
+    name: 'todo_api'
+    properties: {
+      charset: 'UTF8'
+      collation: 'en_US.UTF8'
+    }
+  }
 }

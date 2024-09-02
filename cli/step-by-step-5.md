@@ -36,7 +36,7 @@ You've completed [Module 4](./step-by-step-4.md).
        pub fn new(api_key: String) -> Self {
            ApiClient {
                api_key: api_key,
-               host_name:  "http://localhost:3000".to_string(),
+               host_name:  "https://todo-api.wonderfulbeach-47cacaf7.northeurope.azurecontainerapps.io".to_string(),
                http_client: reqwest::blocking::Client::new(),
            }
        }

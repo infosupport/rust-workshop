@@ -50,7 +50,7 @@ You've completed [Module 4](./step-by-step-4.md).
       To achieve that, create a new file, **model.rs**, in a folder named **api** under **src**.
       Copy the `PagedResult` _struct_ and the `Task` struct over from https://github.com/infosupport/rust-workshop/blob/dfaba0d2f192d91c1c475ff21afb8955252e652a/rest-api/src/entity.rs#L13-L48
       Change the `#[derive(...)]` statements for both structs to `#[derive(Deserialize)]`.
-      Reading the structure from the database is necessary, but we don't need it for this client.
+      Add a new use statement to the top of the file `use serde::Deserialize`. This is required to be able to read tasks from the REST API.
       Inside **api.rs**, add `use model::{PagedResult, Task};` and `mod model;` right to the top of the file.
    2. Next, we must write the signature for the Rust method that will correspond with the first API call, `GET /v1/todos`.
       To do that, we add a Rust _trait_ to the **api.rs** file:

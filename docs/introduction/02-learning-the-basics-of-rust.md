@@ -1,14 +1,12 @@
 # Learning the Basics of Rust
 
-## Learning the Basics of Rust
-
-In this section, we will dive into the fundamentals of Rust programming. We will start by learning how to create a new project using the `cargo new` command and explore the basic file structure of a Rust project. Then, we will cover topics such as variables and mutability, data types including integers, booleans, and strings, and writing functions in Rust. Additionally, we will explore various control flow structures like `if`, `else`, `loop`, `while`, and `for`. These concepts form the foundation of Rust programming and will be essential as we continue our journey in learning Rust.
+In this section, we will dive into the fundamentals of Rust programming. We will start by learning how to create a new project using the `cargo new` command and explore the basic file structure of a Rust project. Then, we will cover topics such as variables and mutability, data types including integers, booleans, and strings, and writing functions in Rust. Additionally, we will explore various control flow structures like `if`, `else`, `loop`, `while`, and `for`. These concepts form the foundation of Rust programming and will be essential as we continue learning Rust.
 
 Let's get started with the basics of Rust programming!
 
 ## Creating a New Project with `cargo new`
 
-To create a new Rust project, you can use the `cargo new` command. This command will create a new directory with the specified project name and set up the basic file structure for a Rust project.
+You can use the `cargo new` command to create a new Rust project. This command will create a new directory with the specified project name and set up the basic file structure for a Rust project.
 
 ```sh
 cargo new my_project
@@ -28,7 +26,8 @@ my_project
 
 ## Working with Variables and Mutability
 
-In Rust, variables are immutable by default. This means that once a value is bound to a variable, it cannot be changed. To create a mutable variable, you can use the `mut` keyword.
+By default, variables in Rust are immutable. This means that a value cannot be changed once it is bound to a variable. 
+You can use the `mut` keyword to create a mutable variable.
 
 ```rust
 fn main() {

@@ -11,8 +11,8 @@ introduction to give you a more interactive experience.
 
 ## Introduction
 
-In the introduction, we explain how Rust works and help you get started quickly with a few concepts. This is not a
-complete explanation of the language, but certainly useful for taking the first steps!
+In the introduction, we explain how Rust works and help you start quickly with a few concepts. This is not a
+a complete explanation of the language, but certainly useful for taking the first steps!
 
 - [Why should you learn Rust?](docs/introduction/01-why-should-you-learn-rust.md)
 - [Learning the basics of Rust](docs/introduction/02-learning-the-basics-of-rust.md)
@@ -20,20 +20,12 @@ complete explanation of the language, but certainly useful for taking the first 
 - [Pattern matching](docs/introduction/04-pattern-matching.md)
 - [Working with structs and traits](docs/introduction/05-working-with-structs-and-traits.md)
 
-## Module Structure
+## :rocket: Getting started
 
-The tutorials are designed so that you can perform them yourself without our help. Each module explains the goal 
-with a set of basic instructions. So, if you are already a bit further along or want to discover how it
-works, you can start independently with the instructions.
+Done reading? [Get started here](https://github.com/infosupport/rust-workshop/tree/main/cli).
 
-In addition to the basic instructions, we have also included a step-by-step plan. You can follow this to get more
-support while learning. We are available during the workshop to help you with questions, so the tutorials should 
-be easy to follow, even if you have little programming experience.
-
-We have extended each module with a completed sample. Please feel free to look at the code if you're stuck. 
-The explanation for each module has a link to the completed sample.
-
-We've included links to the manual with more background information.
+The tutorial covers the basics of Rust. You can choose between a completely self-guided experience and a step-by-step instruction-based approach.
+Whatever you choose, we're here to help, and we hope you enjoy the ride!
 
 ## Completed samples
 
@@ -42,7 +34,7 @@ You can also check out the code for the REST API here: https://github.com/infosu
 
 ## Using the Devcontainer
 
-To make it easier to set up the development environment, we have provided a devcontainer configuration with Rust preconfigured. Follow the steps below to use the devcontainer:
+To make setting up the development environment easier, we have provided a dev container configuration with Rust preconfigured. Follow the steps below to use the dev container:
 
 1. Install Docker on your machine if you haven't already.
 2. Open the project in Visual Studio Code.
@@ -51,4 +43,4 @@ To make it easier to set up the development environment, we have provided a devc
 5. Select the root folder of the project.
 6. Wait for the container to build and start.
 
-Once the container is running, you will have a fully configured Rust development environment.
+Once the container runs, you will have a fully configured Rust development environment.

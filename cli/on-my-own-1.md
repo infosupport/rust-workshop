@@ -11,20 +11,22 @@ In this module, you'll learn how to bootstrap a new Rust project up till the poi
 
 1. Create a new directory where you want the project to live.
 Name it **task-cli**.
-2. Inside this directory, create a file.
-Name it [**Cargo.toml**](https://doc.rust-lang.org/cargo/reference/manifest.html).
-    * Fill the `[package]` section; at least `name` is required, and we suggest to also specify the `edition`  of Rust that we will be using: **2021**.
-    * In the `[dependencies]` section, add dependencies to the following crates with their respective version numbers:
-        * *config*: 0.14.0
-        * *chrono*: 0.4.38, with the `serde` feature enabled
-        * *clap*: 4.5.15, with the `derive` feature enabled
-        * *log*: 0.4.22
-        * *serde*: 1.0.208, with the `derive` feature enabled
-        * *simplelog*: 0.12.2
-        * *reqwest*: 0.12.6, with the `blocking` and `json` features enabled
-3. Create a new file, **src/main.rs**.
+2. Inside this directory run `cargo init .` to initialize the new project.
+3. Add the following dependencies to your project using `cargo add <dependency>` (Use `cargo add --help` if you want to learn how to use features of packages)
+
+  | Dependency | Features |
+  | ---------- | -------- |
+  | chrono | serde |
+  | clap | derive |
+  | config | | 
+  | log | |
+  | reqwest | json, blocking |
+  | serde | derive |
+  | simplelog |
+
+4. Open, **src/main.rs**.
 Write a [function](https://doc.rust-lang.org/book/ch03-03-how-functions-work.html) named `main` and [invoke the `println` macro](https://doc.rust-lang.org/std/macro.println.html), passing "Hello, World" as its argument.
-4. Run your program using `cargo run`.
+5. Run your program using `cargo run`.
 
 Congratulations, you have bootstrapped your first Rust project!
 [On to the next step: using a logging library](./on-my-own-2.md).

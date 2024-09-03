@@ -9,7 +9,7 @@ REST clients, and more.
 Before you begin, we recommend reading the introduction below. During the workshop, we'll talk you through the
 introduction to give you a more interactive experience.
 
-## Introduction
+## 🚩 Introduction
 
 In the introduction, we explain how Rust works and help you start quickly with a few concepts. This is not a
 a complete explanation of the language, but certainly useful for taking the first steps!
@@ -20,19 +20,19 @@ a complete explanation of the language, but certainly useful for taking the firs
 - [Pattern matching](docs/introduction/04-pattern-matching.md)
 - [Working with structs and traits](docs/introduction/05-working-with-structs-and-traits.md)
 
-## :rocket: Getting started
+## 🚀 Getting started
 
 Done reading? [Get started here](https://github.com/infosupport/rust-workshop/tree/main/cli).
 
 The tutorial covers the basics of Rust. You can choose between a completely self-guided experience and a step-by-step instruction-based approach.
 Whatever you choose, we're here to help, and we hope you enjoy the ride!
 
-## Completed samples
+## 💻 Completed samples
 
 If you're just interested in the final product, you can check out the sample in this directory:
 You can also check out the code for the REST API here: https://github.com/infosupport/rust-workshop/tree/main/rest-api
 
-## Using the Devcontainer
+## 🏗️ Using the Devcontainer
 
 To make setting up the development environment easier, we have provided a dev container configuration with Rust preconfigured. Follow the steps below to use the dev container:
 

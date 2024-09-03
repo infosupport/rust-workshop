@@ -3,7 +3,7 @@
 In this module, you'll learn how to perform an HTTP request using the [reqwest](https://docs.rs/reqwest/latest/reqwest/) crate.
 This crate provides a nice, high-level API client.
 It supports both synchronous (blocking) and asynchronous (non-blocking) calls.
-For sake of simplicity, we will be using the blocking calls.
+For the sake of simplicity, we will be using the blocking calls.
 
 ## Prerequisites
 
@@ -15,7 +15,7 @@ You've completed [Module 4](./step-by-step-4.md).
 2. Inside **api.rs**, we will first define a Rust _struct_ to hold the data we need for interacting with the remote API.
    Think of this _struct_ as all the variables and data our application needs to interact with the REST API:
    * the HTTP client itself, 
-   * the remote host name and
+   * the remote hostname and
    * the API key that we read in the previous module.
 
    Add the following lines to **api.rs**:
@@ -26,8 +26,8 @@ You've completed [Module 4](./step-by-step-4.md).
        http_client: reqwest::blocking::Client,
    }
    ```
-   Note that we not only keep the API key in memory, but also the HTTP client, because the Reqwest documentation says
-   >  If you plan to perform multiple requests, it is best to create a `Client` and reuse it, taking advantage of keep-alive connection pooling.
+   Note that we not only keep the API key in memory but also the HTTP client because the Reqwest documentation says
+   >  If you plan to perform multiple requests, creating a `Client` and reusing it is best, taking advantage of keep-alive connection pooling.
    
    Next, we want to be able to instantiate a copy of that struct.
    Add the following snippet to **api.rs**:
@@ -35,7 +35,7 @@ You've completed [Module 4](./step-by-step-4.md).
    impl ApiClient {
        pub fn new(api_key: String) -> Self {
            ApiClient {
-               api_key: api_key,
+               api_key,
                host_name:  "https://todo-api.wonderfulbeach-47cacaf7.northeurope.azurecontainerapps.io".to_string(),
                http_client: reqwest::blocking::Client::new(),
            }
@@ -46,11 +46,11 @@ You've completed [Module 4](./step-by-step-4.md).
 3. Before we go any further, we want to define the operations that our API client can perform.
    They must match the [REST API operations](../rest-api/src/web.rs) that our server offers; see its `create_router` function for the full list.
 
-   1. First, their return types must match those of the REST API.
-      To achieve that, create a new file, **model.rs** in a folder named **api** under **src**.
+   1. First, their return types must match the REST API's.
+      To achieve that, create a new file, **model.rs**, in a folder named **api** under **src**.
       Copy the `PagedResult` _struct_ and the `Task` struct over from [the servers **entity.rs**](https://github.com/infosupport/rust-workshop/blob/main/rest-api/src/entity.rs) (lines 14 till 48) over to this new file.
       Drop the `FromRow` macro from the `derive` attribute.
-      It is necessary for reading the struct from the database, so we don't need it for this client.
+      Reading the structure from the database is necessary, but we don't need it for this client.
       Inside **api.rs**, add `use model::{PagedResult, Task};` and `mod model;` right to the top of the file.
    2. Next, we must write the signature for the Rust method that will correspond with the first API call, `GET /v1/todos`.
       To do that, we add a Rust _trait_ to the **api.rs** file:
@@ -59,15 +59,15 @@ You've completed [Module 4](./step-by-step-4.md).
         fn list(&self, page_num: u8) -> Result<PagedResult<Task>, reqwest::Error>;
       }
       ```
-      Think of this as an _interface_: it defines a function that must exist on any data structure that has the `TaskApiClient` _trait_.
+      Think of this as an _interface_: it defines a function that must exist on any data structure with the `TaskApiClient` trait.
       It defines a function that needs a borrow of "self" ("this" in many other languages) and a page number, which will be an unsigned integer of 8 bits; this allows for values 0 - 255, which is probably enough for this workshop.
       That function will then return a [`Result<PagedResult<Task>, reqwest::Error`](https://doc.rust-lang.org/std/result/index.html).
-      `Result`, again, is an enum that is either an `Ok()` (in this case, with a `PagedResult` of `Task` in it), or an `Err`, in which case it will hold an `Error` from the Reqwest crate.
-      Normally, you don't want to leak your library types into your application code base, but for now we'll stick with it.
-4. Now that the behaviour is well defined, we can start implementing it.
-   After the `impl ApiClient` block, create a new, similar block: `impl TaskApiClient for ApiClient`.
+      `Result,` again, is an enum that is either an `Ok()` (in this case, with a `PagedResult` of `Task` in it) or an `Err,` in which case it will hold an `Error` from the Reqwest crate.
+      Normally, you don't want to leak your library types into your application code base, but we'll stick with it for now.
+4. Now that the behavior is well-defined, we can implement it.
+   After the `impl ApiClient` block, create a similar block: `impl TaskApiClient for ApiClient`.
    This will contain the code that allows the `ApiClient` _struct_ to have the `TaskApiClient` _trait_.
-   Put differently, it makes the `ApiClient` implement the `TaskApiClient` interface that we just wrote.
+   Put differently, it makes the `ApiClient` implement the `TaskApiClient` interface we just wrote.
    Using the Reqwest crate, we can write the implementation:
    ```rs
    fn list(&self, page_num: u8) -> Result<PagedResult<Task>, reqwest::Error> {
@@ -85,7 +85,7 @@ You've completed [Module 4](./step-by-step-4.md).
    }
    ```
    This first part performs the actual HTTP call.
-   It takes the hostname where the API is running, builds the complete URL from it, performs an HTTP `GET` request against that URL with an additional `X-Api-Key` header.
+   It takes the hostname where the API is running, builds the complete URL from it, and performs an HTTP `GET` request against that URL with an additional `X-Api-Key` header.
    
    Now that the HTTP call is out and answered, we must do something with the response.
    Replace the `// Placeholder` with the following piece of code:
@@ -106,19 +106,19 @@ You've completed [Module 4](./step-by-step-4.md).
     };
    ```
    The `response` variable is of type `Result<Response, Error>`.
-   From an HTTP point of view, every call that gets a response is a `Ok`, no matter what the response was: a `404 NOT FOUND` is just as good as a `200 OK`.
+   From an HTTP point of view, every call that gets a response is an `Ok,` no matter what the response was: a `404 NOT FOUND` is just as good as a `200 OK`.
    The `error_for_status` method changes this and turns all responses with status code between 400 and 599 in an `Error`.
    We can then match against the outcome of that:
-   1. The `Ok(body)` arm of the match runs when the result of `error_for_status` is (still) an `Ok` value, and creates a local variable `body` with the actual response.
+   1. The `Ok(body)` arm of the match runs when the result of `error_for_status` is (still) an `Ok` value and creates a local variable `body` with the actual response.
    The `json::<PagedResult<Task>>()` call uses the Serde crate and our `Deserialize` macro to parse the response body into instances of the `PagedResult` and `Task` structs.
-   2. The `Err(error)` arm will run when the result of `error_for_status` is an `Err` struct, and makes its inner error available in the `error` variable.
-   We use it to print a few things - the `unwrap()` invocations are there because not all Reqwest errors will have an HTTP status code, and because you could chose to remove the URL from an error if you suspect it to contain sensitive information. 
+   2. The `Err(error)` arm will run when the result of `error_for_status` is an `Err` struct and makes its inner error available in the `error` variable.
+   We use it to print a few things - the `unwrap()` invocations are there because not all Reqwest errors will have an HTTP status code and because you could choose to remove the URL from an error if you suspect it to contain sensitive information. 
 
    Note also how the last statements inside each arm do not end with a semicolon!
    This automatically makes those expressions the return value of that arm.
-   Since the `match` is exhaustive (it has to be, the Rust compiler will print an error if it isn't), we can use the same trick for the `match` itself - no semicolon or return and it automatically becomes the return value for this function.
+   Since the `match` is exhaustive (it has to be; the Rust compiler will print an error if it isn't), we can use the same trick for the `match` itself - no semicolon or return, and it automatically becomes the return value for this function.
 
-5. Finally, change the **main.rs** file to use this new REST API client and print something useful from the information that we retrieve with it.
+5. Finally, change the **main.rs** file to use this new REST API client and print useful information from the information we retrieve with it.
    First, inside **main.rs**, add `mod api;` to the top of the file.
    Replace the last lines of the `main` function with this:
    ```rs
@@ -146,14 +146,14 @@ You've completed [Module 4](./step-by-step-4.md).
    }
    ```
    Let's break this down.
-   1. The first line does the actual invocation and request the first page - which is indicated with the magic number `0`.
-   The result of that function call is then matched - are you starting to ee a pattern? - against two arms.
-   2. The `Ok` arm logs how many tasks are in the result and prints a summary for each of them.
-   Because `page_size` is a relatively small number it fits in an `i32` (32-bit integer).
+   1. The first line does the actual invocation and requests the first page, which is indicated with the magic number `0`.
+   The result of that function call is then matched - are you starting to see a pattern? - against two arms.
+   2. The `Ok` arm logs the number of tasks in the result and prints a summary for each one.
+   Because `page_size` is a relatively small number, it fits in with an `i32` (32-bit integer).
    The number of tasks one can have (`total_count`) is much larger, so it's declared as an `i64` (64-bit integer).
    The `min` method only works on variables of the same type, so we must "upcast" `page_size` to also be an `i64`.
-   3. The `Err` arm just prins the error it found and then terminates the program with exist code `1`.
-   It is customary that non-succesfull termination of a program is signaled by a non-zero exit code.
+   3. The `Err` arm just prints the error it found and then terminates the program with exit code `1`.
+   It is customary that a non-zero exit code signals non-successful program termination.
 
-Congratulations, you've made it through the hardest part of this workshop!
-From here on, you have seen all the bricks to start building your own application.
+Congratulations, you've made it through the most challenging part of this workshop!
+From here on, you have seen all the bricks to start building your application.

@@ -1,7 +1,7 @@
-# TASK CLI
+# Building a CLI with Rust
 
-This application is a command-line interface to the [REST API for managing tasks](../rest-api).
-Just like its counterpart, it's far from feature complete, but it gives you a good idea of what programming a command-line tool (CLI) in Rust looks like.
+Welcome to the tutorial! In this tutorial, you'll build your first command-line application in Rust for the [TODO API](../rest-api). 
+This will be a simple application that covers some of the basics of building a Rust-based application.
 
 Follow the instructions in this document to understand how to write programs like these.
 
@@ -21,5 +21,3 @@ There will still be pointers to relevant documentation, but you can read them la
 This guide will take you less time, but may require additional studying later to get the same level of understanding.
 
 Whichever path you take: have fun!
-
-## User Manual

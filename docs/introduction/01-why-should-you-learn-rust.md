@@ -24,14 +24,17 @@ Rust makes it useful for applications such as the Windows or Linux kernel becaus
 Real-time embedded systems is another space where Rust is useful, because you can work within very limited resource
 constraints with Rust. As you can imagine, people are using Rust for data engineering and AI as well for its performance.
 
-You can use Rust also for enhancing the experience with other languages. Many of the development tools for Python are
-built with Rust because it's much faster than Python itself. It's suprising to see how many people are building
+You can also use Rust to enhance the experience with other languages. Many of the development tools for Python are
+built with Rust because it's much faster than Python itself. It's surprising to see how many people are building
 developer tools for other languages in Rust. 
 
+We also found that Rust is great for green computing because its zero-cost abstraction approach reduces the amount of 
+overhead when running the software. Rust runs well on low-powered environments, too, for the same reason.
+
 Finally, we can recommend Rust for mission critical applications for its safety features. Rust is built around the idea
-that the compiler can check how you manage memory. It prevents many of the usual memory bugs with its tight memory
-management regime. It's also good to know that thread safety is implemented in the compiler. Finally, Rust has a great
-type system that's very robust so you can be sure the app works when it compiles.
+that the compiler can check how you manage memory. Its tight memory management regime prevents many of the usual memory 
+bugs. It's also good to know that thread safety is implemented in the compiler. Finally, Rust has a great
+type system that's very robust, so you can be sure the app works when it compiles.
 
 ## How productive is Rust?
 
@@ -42,8 +45,8 @@ It is true that Rust requires effort to learn because of how different it is fro
 good tutorials you can be on your way quite quickly. We recommend skipping over the more advanced parts to speed up
 your journey. You're not going to need them in most cases.
 
-Once you get the hang of the syntax you'll find that Rust is quite productive because of the many great libraries that
-you can use. In the rest of the tutorial we'll point out a few interesting ones that we think are useful in many
+Once you get the hang of the syntax, you'll find that Rust is quite productive because of the many great libraries 
+you can use. In the rest of the tutorial, we'll point out a few interesting ones that we think are useful for many
 applications.
 
 ## What's included in the box?
@@ -53,14 +56,14 @@ Let's go over the stuff that's included in the box.
 
 ### Package management
 
-When you install Rust, you get [Cargo](https://github.com/rust-lang/cargo) installed as well. With this tool you can
+When you install Rust, you also get [Cargo](https://github.com/rust-lang/cargo) installed. With this tool, you can
 manage Rust projects. Cargo allows you to create new projects, build projects for various operating systems, and run
 tests. It also includes functions to manage project dependencies. You'll see us use Cargo a lot during the tutorial.
 
 ### Testing support
 
-Rust has built-in support for running unit-tests, and system tests. Unit-tests are included in individual modules you
-build. System tests are included at package level. We'll explore building unit-tests as part of the tutorial.
+Rust has built-in support for running unit tests and system tests. Unit tests are included in individual modules you
+build. System tests are included at the package level. We'll explore building unit tests as part of the tutorial.
 
 ### Linting support
 
@@ -71,13 +74,13 @@ are great, but you can configure things if you need to make an exception on the 
 ### Documentation
 
 Rust includes syntax to write inline documentation. The inline documentation syntax in Rust allows you to write 
-method level documentation as well as overall documentation. The documentation is generated using 
+method-level documentation as well as overall documentation. The documentation is generated using 
 [rustdoc](https://doc.rust-lang.org/rustdoc/index.html). You'll find that most developers publish their documentation
 on [docs.rs](https://docs.rs) straight from their CI pipeline.
 
 ## Summary
 
-Overall, you could say that Rust is a pretty complete language that has some interesting things to offer. However, we
+Overall, you could say that Rust is a pretty complete language with some interesting things to offer. However, we
 strongly believe that you should try it to get a good feel for it.
 
 In [the next section](./02-learning-the-basics-of-rust.md) we'll cover the basics of the language in greater depth

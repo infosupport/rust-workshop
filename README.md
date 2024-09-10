@@ -22,7 +22,7 @@ a complete explanation of the language, but certainly useful for taking the firs
 
 ## 🚀 Getting started
 
-Done reading? [Get started here](https://github.com/infosupport/rust-workshop/tree/main/cli).
+Done reading? [Get started here](https://github.com/infosupport/rust-workshop/tree/main/cli/README.md).
 
 The tutorial covers the basics of Rust. You can choose between a completely self-guided experience and a step-by-step instruction-based approach.
 Whatever you choose, we're here to help, and we hope you enjoy the ride!

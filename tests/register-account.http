@@ -2,5 +2,5 @@ POST https://todo-api.calmcliff-3c231451.northeurope.azurecontainerapps.io/v1/us
 Content-Type: application/json
 
 {
-    "email_address": "willemm@infosupport.com"
+    "email_address": "me@example.com"
 }

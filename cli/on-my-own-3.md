@@ -9,7 +9,7 @@ You've completed [Module 2](./on-my-own-2.md).
 
 ## Instructions
 
-1. Use the [_derive_ feature](https://docs.rs/clap/latest/clap/_derive/_tutorial/chapter_0/index.html) of the _clap_ crate to declare our initial command-line interface.
+1. Use the [_derive_ feature](https://docs.rs/clap/4.5.47/clap/_derive/_tutorial/index.html#tutorial-for-the-derive-api) of the _clap_ crate to declare our initial command-line interface.
    It should be able to print its version, give brief help information to users, and toggle a _verbose_ mode.
 2. Let's verify our work so far.
    Open a terminal and navigate into the project directory, or re-use the terminal window you might have from module 1.

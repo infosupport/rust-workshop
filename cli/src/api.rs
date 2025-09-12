@@ -16,7 +16,7 @@ impl ApiClient {
     pub fn new(api_key: String) -> Self {
         ApiClient {
             api_key: api_key,
-            host_name: "https://todo-api.wonderfulbeach-47cacaf7.northeurope.azurecontainerapps.io".to_string(),
+            host_name: "https://todo-api.calmcliff-3c231451.northeurope.azurecontainerapps.io".to_string(),
             http_client: reqwest::blocking::Client::new(),
         }
     }

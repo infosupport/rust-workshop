@@ -32,7 +32,7 @@ You've completed [Module 4](./on-my-own-4.md).
 3. Before we go any further, we want to define the operations that our API client can perform.
    They must match the [REST API operations](../rest-api/src/web.rs) that our server offers; see its `create_router` function for the full list.
 
-   1. Since their return types must match those of the REST API, copy the `PagedResult` _struct_ and the `Task` struct over from [the servers **entity.rs**](https://github.com/infosupport/rust-workshop/blob/main/rest-api/src/entity.rs) to a new file in your project, but remove the `FromRow` macros from the `derive` attributes.
+   1. Since their return types must match those of the REST API, copy the `PagedResult` _struct_ and the `Task` struct over from [the servers **entity.rs**](https://github.com/infosupport/rust-workshop/blob/main/rest-api/src/entity.rs) to a new file in your project, but remove the `FromRow` macros from the `derive` attributes. Also, replace `Serialize` with `Deserialize`.
    2. Write the signature for the Rust method that will correspond with the first API call, `GET /v1/todos`.
    Do that in a Rust _trait_, which is some _interface_: it defines a function that must exist on any data structure with the `TaskApiClient` _trait_.
    The function will have to return a [`Result<PagedResult<Task>, reqwest::Error`](https://doc.rust-lang.org/std/result/index.html).

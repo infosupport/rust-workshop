@@ -9,7 +9,7 @@ You've completed [Module 1](./step-by-step-1.md).
 ## Instructions
 
 1. Open the **main.rs** file and add the following lines to the top:
-   
+
    ```rust
    use simplelog::ColorChoice;
    use simplelog::LevelFilter;
@@ -32,9 +32,10 @@ You've completed [Module 1](./step-by-step-1.md).
        TermLogger::init(level, config, TerminalMode::Mixed, ColorChoice::Auto).unwrap();
    }
    ```
+
    This code determines the logging level that our application will show, allowing us to suppress debug logging later.
    It also specifies how the logging will be outputted; in our case, it is printed to the terminal using standard out and standard error, using colors if possible.
-3. Inside the main function, replace the call to the `println!` macro with the following block:
+2. Inside the main function, replace the call to the `println!` macro with the following block:
 
    ```rust
    prepare_logging(false);
@@ -42,7 +43,7 @@ You've completed [Module 1](./step-by-step-1.md).
    log::info!("Hello, world!");
    ```
 
-4. Verify our application still works by running `cargo run` again.
+3. Verify our application still works by running `cargo run` again.
 
 Congratulations, you have configured logging in to your first Rust project!
 Next step: [parsing command-line arguments](./step-by-step-3.md).

@@ -13,15 +13,16 @@ You've completed [Module 4](./on-my-own-4.md).
 
 1. Create a new file in the same directory as before and name it **api.rs**.
 2. Inside **api.rs**, we define a Rust _struct_ to hold the data we need for interacting with the remote API:
-   * the HTTP client itself, of type [`reqwest::blocking::Client`](https://docs.rs/reqwest/latest/reqwest/struct.Client.html), 
+   * the HTTP client itself, of type [`reqwest::blocking::Client`](https://docs.rs/reqwest/latest/reqwest/struct.Client.html),
    * the remote hostname and
    * the API key that we read in the previous module.
 
    Note that we not only keep the API key in memory but also the HTTP client because the Reqwest documentation says
-   >  If you plan to perform multiple requests, creating a `Client` and reusing it is best, taking advantage of keep-alive connection pooling.
-   
+   > If you plan to perform multiple requests, creating a `Client` and reusing it is best, taking advantage of keep-alive connection pooling.
+
    Next, we want to be able to instantiate a copy of that struct.
    Add the following snippet to **api.rs**:
+
    ```rust
    impl ApiClient {
        pub fn new(api_key: String) -> Self {
@@ -29,6 +30,7 @@ You've completed [Module 4](./on-my-own-4.md).
        }
    }
    ```
+
 3. Before we go any further, we want to define the operations that our API client can perform.
    They must match the [REST API operations](../rest-api/src/web.rs) that our server offers; see its `create_router` function for the full list.
 
@@ -48,7 +50,6 @@ You've completed [Module 4](./on-my-own-4.md).
    From an HTTP point of view, every call that gets a response is a `Ok`, no matter what the response was: a `404 NOT FOUND` is just as good as a `200 OK`.
    The `error_for_status` method changes this and turns all responses with status code between 400 and 599 in an `Error`.
 5. Finally, inside the **main.rs** file, use your new API client to invoke the REST API and print helpful something from the information you retrieve!
-
 
 Congratulations, you've made it through the most challenging part of this workshop!
 From here on, you have seen all the bricks to start building your application.

@@ -14,13 +14,16 @@ You've completed [Module 3](./step-by-step-3.md).
 ## Instructions
 
 1. Change the **main.rs** file to include the _config_ crate by adding this block to the "use" statements:
-   ```rs
+
+   ```rust
    use config::Config;
    use config::File;
    use config::FileFormat;
    ```
+
    Next, add the following snippet to the `main` method below the `prepare_logging` invocation:
-   ```rs
+
+   ```rust
    let source = File::with_name("task.ini").format(FileFormat::Ini);
    let config = Config::builder()
        .add_source(source)
@@ -37,6 +40,7 @@ You've completed [Module 3](./step-by-step-3.md).
 
    log::info!("Found API key: {}", api_key);
    ```
+
    Let's break this down.
    1. The first line declares a configuration file named **task.ini**, following the [INI format](https://en.wikipedia.org/wiki/INI_file) in the working directory where our program is invoked.
    Note that the file is not read at this point - it is nothing more than a variable describing it.

@@ -46,13 +46,17 @@ You've completed [Module 2](./step-by-step-2.md).
 
    These two lines invoke the parser that the `Parser` macro has generated for us, and reads the outcome.
    Let's use that to configure our logging; replace the current invocation of `prepare_logging` with
-   ```rs
+
+   ```rust
    prepare_logging(verbose);
    ```
+
    And just above the call to `log::info`, add this line
-   ```rs
+
+   ```rust
    log::debug!("Test");
    ```
+
    Now rebuild and play around with our newly created _verbosity_.
 
 Congratulations, you have made your first steps in parsing command-line arguments!

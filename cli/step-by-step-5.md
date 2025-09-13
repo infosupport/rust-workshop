@@ -19,19 +19,22 @@ You've completed [Module 4](./step-by-step-4.md).
    * the API key that we read in the previous module.
 
    Add the following lines to **api.rs**:
-   ```rs
+
+   ```rust
    pub struct ApiClient {
        api_key: String,
        host_name: String,
        http_client: reqwest::blocking::Client,
    }
    ```
+
    Note that we not only keep the API key in memory but also the HTTP client because the Reqwest documentation says
-   >  If you plan to perform multiple requests, creating a `Client` and reusing it is best, taking advantage of keep-alive connection pooling.
-   
+   > If you plan to perform multiple requests, creating a `Client` and reusing it is best, taking advantage of keep-alive connection pooling.
+
    Next, we want to be able to instantiate a copy of that struct.
    Add the following snippet to **api.rs**:
-   ```rs
+
+   ```rust
    impl ApiClient {
        pub fn new(api_key: String) -> Self {
            ApiClient {
@@ -42,23 +45,26 @@ You've completed [Module 4](./step-by-step-4.md).
        }
    }
    ```
+
    You can interpret this as a _constructor_ for the struct: it stores the API key, the hostname where the REST API is running and a new instance of the `reqwest::blocking::Client` together.
 3. Before we go any further, we want to define the operations that our API client can perform.
    They must match the [REST API operations](../rest-api/src/web.rs) that our server offers; see its `create_router` function for the full list.
 
    1. First, their return types must match the REST API's.
       To achieve that, create a new file, **model.rs**, in a folder named **api** under **src**.
-      Copy the `PagedResult` _struct_ and the `Task` struct over from https://github.com/infosupport/rust-workshop/blob/dfaba0d2f192d91c1c475ff21afb8955252e652a/rest-api/src/entity.rs#L13-L48
+      Copy the `PagedResult` _struct_ and the `Task` struct over from [entity.rs](https://github.com/infosupport/rust-workshop/blob/dfaba0d2f192d91c1c475ff21afb8955252e652a/rest-api/src/entity.rs#L13-L48).
       Change the `#[derive(...)]` statements for both structs to `#[derive(Deserialize)]`.
       Add a new use statement to the top of the file `use serde::Deserialize`. This is required to be able to read tasks from the REST API.
       Inside **api.rs**, add `use model::{PagedResult, Task};` and `mod model;` right to the top of the file.
    2. Next, we must write the signature for the Rust method that will correspond with the first API call, `GET /v1/todos`.
       To do that, we add a Rust _trait_ to the **api.rs** file:
-      ```rs
+
+      ```rust
       pub trait TaskApiClient {
         fn list(&self, page_num: u8) -> Result<PagedResult<Task>, reqwest::Error>;
       }
       ```
+
       Think of this as an _interface_: it defines a function that must exist on any data structure with the `TaskApiClient` trait.
       It defines a function that needs a borrow of "self" ("this" in many other languages) and a page number, which will be an unsigned integer of 8 bits; this allows for values 0 - 255, which is probably enough for this workshop.
       That function will then return a [`Result<PagedResult<Task>, reqwest::Error`](https://doc.rust-lang.org/std/result/index.html).
@@ -69,7 +75,8 @@ You've completed [Module 4](./step-by-step-4.md).
    This will contain the code that allows the `ApiClient` _struct_ to have the `TaskApiClient` _trait_.
    Put differently, it makes the `ApiClient` implement the `TaskApiClient` interface we just wrote.
    Using the Reqwest crate, we can write the implementation:
-   ```rs
+
+   ```rust
    fn list(&self, page_num: u8) -> Result<PagedResult<Task>, reqwest::Error> {
        let url = format!("{}/v1/todos?page={}", &self.host_name, page_num);
        log::debug!("GET {}", url);
@@ -84,12 +91,14 @@ You've completed [Module 4](./step-by-step-4.md).
        return result;
    }
    ```
+
    This first part performs the actual HTTP call.
    It takes the hostname where the API is running, builds the complete URL from it, and performs an HTTP `GET` request against that URL with an additional `X-Api-Key` header.
-   
+
    Now that the HTTP call is out and answered, we must do something with the response.
    Replace the `// Placeholder` with the following piece of code:
-   ```rs
+
+   ```rust
    match response?.error_for_status() {
        Ok(body) => {
            log::debug!("Looks good so far!");
@@ -105,6 +114,7 @@ You've completed [Module 4](./step-by-step-4.md).
        }
     };
    ```
+
    The `response` variable is of type `Result<Response, Error>`.
    From an HTTP point of view, every call that gets a response is an `Ok,` no matter what the response was: a `404 NOT FOUND` is just as good as a `200 OK`.
    The `error_for_status` method changes this and turns all responses with status code between 400 and 599 in an `Error`.
@@ -112,7 +122,7 @@ You've completed [Module 4](./step-by-step-4.md).
    1. The `Ok(body)` arm of the match runs when the result of `error_for_status` is (still) an `Ok` value and creates a local variable `body` with the actual response.
    The `json::<PagedResult<Task>>()` call uses the Serde crate and our `Deserialize` macro to parse the response body into instances of the `PagedResult` and `Task` structs.
    2. The `Err(error)` arm will run when the result of `error_for_status` is an `Err` struct and makes its inner error available in the `error` variable.
-   We use it to print a few things - the `unwrap()` invocations are there because not all Reqwest errors will have an HTTP status code and because you could choose to remove the URL from an error if you suspect it to contain sensitive information. 
+   We use it to print a few things - the `unwrap()` invocations are there because not all Reqwest errors will have an HTTP status code and because you could choose to remove the URL from an error if you suspect it to contain sensitive information.
 
    Note also how the last statements inside each arm do not end with a semicolon!
    This automatically makes those expressions the return value of that arm.
@@ -121,12 +131,15 @@ You've completed [Module 4](./step-by-step-4.md).
 5. Finally, change the **main.rs** file to use this new REST API client and print useful information from the information we retrieve with it.
    First, inside **main.rs**, add `mod api;` to the top of the file.
    Replace the last lines of the `main` function with this:
-   ```rs
+
+   ```rust
    let client = api::ApiClient::new(api_key);
    ```
+
    This instantiates the struct _with_ the trait that will help us interact with the REST API.
    Next, let's do the first API call using this client:
-   ```rs
+
+   ```rust
    match client.list(0) {
        Ok(result) => {
            log::info!(
@@ -145,6 +158,7 @@ You've completed [Module 4](./step-by-step-4.md).
        }
    }
    ```
+
    Let's break this down.
    1. The first line does the actual invocation and requests the first page, which is indicated with the magic number `0`.
    The result of that function call is then matched - are you starting to see a pattern? - against two arms.

@@ -18,14 +18,15 @@ Name it **task-cli**.
   | ---------- | -------- |
   | chrono | serde |
   | clap | derive |
-  | config | | 
+  | config | |
   | log | |
   | reqwest | json, blocking |
   | serde | derive |
-  | simplelog |
+  | simplelog | |
 
 4. Open, **src/main.rs**.
 Write a [function](https://doc.rust-lang.org/book/ch03-03-how-functions-work.html) named `main` and [invoke the `println` macro](https://doc.rust-lang.org/std/macro.println.html), passing "Hello, World" as its argument.
+
 5. Run your program using `cargo run`.
 
 Congratulations, you have bootstrapped your first Rust project!
